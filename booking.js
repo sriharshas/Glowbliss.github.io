@@ -1,6 +1,6 @@
 /* ===== Glow Bliss — booking.js ===== */
 const WHATSAPP_NUMBER = "31633343093";
-const FORMSPREE_URL   = "https://formspree.io/f/mounicaraj1497"; // replace token after signup
+const FORMSPREE_URL   = "https://formspree.io/f/xnjryarb"; // replace token after signup
 
 // ─── Service catalogue ───────────────────────────────────────────────────────
 const SERVICES = [
