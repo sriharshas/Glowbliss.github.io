@@ -438,16 +438,30 @@ function downloadPDF() {
     }
     
     const element = document.getElementById('invoicePreview');
+    if (!element || !element.innerHTML) {
+        alert('Invoice preview is empty. Please add services first.');
+        return;
+    }
+    
     const opt = {
         margin: [0.4, 0.4, 0.4, 0.4],
         filename: `invoice-${custName}-${new Date().toISOString().split('T')[0]}.pdf`,
         image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2, useCORS: true },
+        html2canvas: { scale: 2, useCORS: true, logging: false },
         jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait', compress: true },
         pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
     };
     
-    html2pdf().set(opt).from(element).save();
+    try {
+        if (typeof html2pdf === 'undefined') {
+            alert('PDF library not loaded. Please refresh the page and try again.');
+            return;
+        }
+        html2pdf().set(opt).from(element).save();
+    } catch (error) {
+        console.error('PDF generation error:', error);
+        alert('Error generating PDF: ' + error.message);
+    }
 }
 
 function printInvoice() {
