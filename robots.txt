@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+Disallow: /assets/private/
+
+# Slow crawlers
+User-agent: AhrefsBot
+Crawl-delay: 10
+
+User-agent: SemrushBot
+Crawl-delay: 10
+
+# Sitemap
+Sitemap: https://glowbliss-beautyparlour.nl/sitemap.xml
