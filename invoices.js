@@ -293,12 +293,26 @@ function updatePreview() {
         </tr>`;
     });
     
+    // Calculate discount
+    const discountType = document.getElementById('discountType').value;
+    const discountValue = parseFloat(document.getElementById('discountValue').value) || 0;
+    let discountAmount = 0;
+    
+    if (discountType === 'amount' && discountValue > 0) {
+        discountAmount = discountValue;
+    } else if (discountType === 'percentage' && discountValue > 0) {
+        discountAmount = (grandTotal * discountValue) / 100;
+    }
+    
+    // Apply discount to grand total
+    const finalTotal = grandTotal - discountAmount;
+    
     const preview = `
         <div class="invoice-document">
             <!-- Header Section -->
             <div class="invoice-header-row">
                 <div class="logo-section">
-                    <div class="logo-placeholder">LOGO</div>
+                    <img src="logo.png" alt="Glow Bliss Logo" class="logo-image">
                 </div>
                 <div class="title-section">
                     <h1 class="invoice-title">Tax Invoice</h1>
@@ -372,7 +386,7 @@ function updatePreview() {
                     </div>
                     <div class="total-row">
                         <span>Discount, €:</span>
-                        <span>€0.00</span>
+                        <span>€${discountAmount.toFixed(2)}</span>
                     </div>
                     <div class="total-row">
                         <span>Tax (9%), €:</span>
@@ -384,15 +398,7 @@ function updatePreview() {
                     </div>
                     <div class="total-row final">
                         <span>Total, €:</span>
-                        <span>€${grandTotal.toFixed(2)}</span>
-                    </div>
-                    <div class="total-row">
-                        <span>Amount paid, €:</span>
-                        <span>€0.00</span>
-                    </div>
-                    <div class="balance-due">
-                        <span>Balance Due, €:</span>
-                        <span>€${grandTotal.toFixed(2)}</span>
+                        <span>€${finalTotal.toFixed(2)}</span>
                     </div>
                 </div>
             </div>
@@ -433,11 +439,12 @@ function downloadPDF() {
     
     const element = document.getElementById('invoicePreview');
     const opt = {
-        margin: 0.5,
+        margin: [0.4, 0.4, 0.4, 0.4],
         filename: `invoice-${custName}-${new Date().toISOString().split('T')[0]}.pdf`,
         image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+        html2canvas: { scale: 2, useCORS: true },
+        jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait', compress: true },
+        pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
     };
     
     html2pdf().set(opt).from(element).save();

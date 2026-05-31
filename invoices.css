@@ -240,13 +240,10 @@
     flex: 0 0 auto;
 }
 
-.logo-placeholder {
-    background: #e0e0e0;
-    padding: 1rem 1.5rem;
-    font-weight: bold;
-    color: #999;
-    font-size: 1.2rem;
-    border-radius: 4px;
+.logo-image {
+    max-width: 100px;
+    max-height: 100px;
+    object-fit: contain;
 }
 
 .title-section {
