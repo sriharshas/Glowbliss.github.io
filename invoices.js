@@ -443,21 +443,86 @@ function downloadPDF() {
         return;
     }
     
-    const opt = {
-        margin: [0.4, 0.4, 0.4, 0.4],
-        filename: `invoice-${custName}-${new Date().toISOString().split('T')[0]}.pdf`,
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2, useCORS: true, logging: false },
-        jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait', compress: true },
-        pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
-    };
-    
     try {
-        if (typeof html2pdf === 'undefined') {
+        if (typeof html2canvas === 'undefined') {
             alert('PDF library not loaded. Please refresh the page and try again.');
             return;
         }
-        html2pdf().set(opt).from(element).save();
+        
+        // Show loading message
+        const originalBtnText = document.getElementById('downloadPdfBtn').textContent;
+        document.getElementById('downloadPdfBtn').textContent = '⏳ Generating PDF...';
+        document.getElementById('downloadPdfBtn').disabled = true;
+        
+        // Convert invoice to canvas
+        html2canvas(element, {
+            scale: 2,
+            useCORS: true,
+            logging: false,
+            allowTaint: true,
+            backgroundColor: '#ffffff'
+        }).then(canvas => {
+            try {
+                // Get canvas dimensions
+                const imgData = canvas.toDataURL('image/jpeg', 0.98);
+                const imgWidth = 210; // A4 width in mm
+                const imgHeight = (canvas.height * imgWidth) / canvas.width;
+                
+                // Create PDF
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF({
+                    orientation: 'portrait',
+                    unit: 'mm',
+                    format: 'a4'
+                });
+                
+                // Calculate scaling to fit on one page
+                const pageHeight = pdf.internal.pageSize.getHeight();
+                const pageWidth = pdf.internal.pageSize.getWidth();
+                const margin = 10;
+                const availableHeight = pageHeight - (margin * 2);
+                const availableWidth = pageWidth - (margin * 2);
+                
+                let finalHeight = imgHeight;
+                let finalWidth = imgWidth;
+                
+                if (finalHeight > availableHeight) {
+                    finalHeight = availableHeight;
+                    finalWidth = (canvas.width * finalHeight) / canvas.height;
+                }
+                
+                if (finalWidth > availableWidth) {
+                    finalWidth = availableWidth;
+                    finalHeight = (canvas.height * finalWidth) / canvas.width;
+                }
+                
+                // Center the image on the page
+                const x = (pageWidth - finalWidth) / 2;
+                const y = margin;
+                
+                pdf.addImage(imgData, 'JPEG', x, y, finalWidth, finalHeight);
+                
+                // Save the PDF
+                const filename = `invoice-${custName}-${new Date().toISOString().split('T')[0]}.pdf`;
+                pdf.save(filename);
+                
+                // Restore button
+                document.getElementById('downloadPdfBtn').textContent = originalBtnText;
+                document.getElementById('downloadPdfBtn').disabled = false;
+                
+            } catch (error) {
+                console.error('PDF creation error:', error);
+                alert('Error creating PDF: ' + error.message);
+                document.getElementById('downloadPdfBtn').textContent = originalBtnText;
+                document.getElementById('downloadPdfBtn').disabled = false;
+            }
+        }).catch(error => {
+            console.error('Canvas conversion error:', error);
+            alert('Error converting invoice to image: ' + error.message);
+            document.getElementById('downloadPdfBtn').textContent = originalBtnText;
+            document.getElementById('downloadPdfBtn').disabled = false;
+        });
+        
     } catch (error) {
         console.error('PDF generation error:', error);
         alert('Error generating PDF: ' + error.message);
