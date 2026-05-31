@@ -214,7 +214,7 @@
     border: 1px solid #ddd;
     border-radius: 8px;
     overflow: visible;
-    min-height: 600px;
+    min-height: auto;
 }
 
 .invoice-document {
