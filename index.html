@@ -499,6 +499,71 @@
   <svg viewBox="0 0 32 32" width="26" height="26" fill="currentColor"><path d="M16 .4C7.4.4.5 7.3.5 15.9c0 2.8.7 5.5 2.1 7.9L.4 31.6l8-2.1c2.3 1.2 4.9 1.9 7.6 1.9 8.6 0 15.5-6.9 15.5-15.5S24.6.4 16 .4zm7.1 18.7c-.4-.2-2.3-1.1-2.6-1.3s-.6-.2-.9.2-1 1.3-1.2 1.5-.4.3-.8.1c-2.3-1.2-3.9-2.6-5.4-4.9-.4-.7.4-.6 1.1-2.1.1-.3.1-.5 0-.7s-.9-2.1-1.2-2.9c-.3-.8-.6-.7-.9-.7h-.8c-.3 0-.7.1-1.1.5s-1.4 1.4-1.4 3.4 1.5 3.9 1.7 4.2c.2.3 2.9 4.5 7.1 6.3 2.6 1.1 3.7 1.2 5 1 .8-.1 2.3-.9 2.6-1.9.3-.9.3-1.7.2-1.9-.1-.1-.3-.2-.7-.4z"/></svg>
 </a>
 
+<script src="load-prices.js"></script>
 <script src="script.js"></script>
+
+<!-- Update prices from rate_card.json -->
+<script>
+    // Wait for RATE_CARD to load from rate_card.json
+    document.addEventListener('rateCardLoaded', function() {
+        console.log('✅ Updating prices from RATE_CARD');
+        updatePricesFromRateCard();
+    });
+    
+    // Fallback: Update when page fully loads
+    window.addEventListener('load', function() {
+        setTimeout(function() {
+            if (RATE_CARD && Object.keys(RATE_CARD).length > 0) {
+                updatePricesFromRateCard();
+            }
+        }, 500);
+    });
+
+    function updatePricesFromRateCard() {
+        if (!RATE_CARD || Object.keys(RATE_CARD).length === 0) {
+            console.warn('RATE_CARD not loaded');
+            return;
+        }
+
+        console.log('Processing price list items...');
+        const priceLists = document.querySelectorAll('.price-list li');
+        let updated = 0;
+        
+        priceLists.forEach(item => {
+            const spans = item.querySelectorAll('span');
+            if (spans.length === 0) return;
+            
+            const serviceName = spans[0].textContent.trim();
+            const priceElements = item.querySelectorAll('b');
+            if (priceElements.length === 0) return;
+
+            // Search through all categories in RATE_CARD
+            let found = false;
+            for (const [categoryName, categoryData] of Object.entries(RATE_CARD)) {
+                const services = categoryData.services;
+                
+                // Find matching service by name
+                for (const [svcName, price] of Object.entries(services)) {
+                    if (svcName.toLowerCase() === serviceName.toLowerCase() || 
+                        svcName === serviceName) {
+                        // Update ALL price elements in this item (for two-column waxing display)
+                        priceElements.forEach(priceEl => {
+                            if (priceEl.textContent.includes('€') || priceEl.textContent.includes('-')) {
+                                priceEl.textContent = '€' + price.toFixed(2);
+                            }
+                        });
+                        console.log(`✅ Updated: ${svcName} = €${price}`);
+                        updated++;
+                        found = true;
+                        break;
+                    }
+                }
+                if (found) break;
+            }
+        });
+        
+        console.log(`Updated ${updated} prices`);
+    }
+</script>
 </body>
 </html>

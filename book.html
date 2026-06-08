@@ -198,7 +198,74 @@
   <input type="text" name="_gotcha" style="display:none"/>
 </form>
 
+<script src="load-prices.js"></script>
 <script src="script.js"></script>
 <script src="booking.js"></script>
+
+<!-- Update prices from rate_card.json -->
+<script>
+    // Wait for RATE_CARD to load from rate_card.json
+    document.addEventListener('rateCardLoaded', function() {
+        console.log('✅ RATE_CARD loaded, updating booking page');
+        updateBookingPricesFromRateCard();
+    });
+    
+    // Fallback: Update when page fully loads
+    window.addEventListener('load', function() {
+        setTimeout(function() {
+            if (RATE_CARD && Object.keys(RATE_CARD).length > 0) {
+                updateBookingPricesFromRateCard();
+            }
+        }, 500);
+    });
+
+    function updateBookingPricesFromRateCard() {
+        if (!RATE_CARD || Object.keys(RATE_CARD).length === 0) {
+            console.warn('RATE_CARD not loaded yet');
+            return;
+        }
+
+        console.log('Updating booking page prices from RATE_CARD');
+        
+        // Update service list display
+        const priceLists = document.querySelectorAll('.price-list li');
+        let updated = 0;
+        
+        priceLists.forEach(item => {
+            const spans = item.querySelectorAll('span');
+            if (spans.length === 0) return;
+            
+            const serviceName = spans[0].textContent.trim();
+            const priceElements = item.querySelectorAll('b');
+            if (priceElements.length === 0) return;
+
+            // Search through all categories in RATE_CARD
+            let found = false;
+            for (const [categoryName, categoryData] of Object.entries(RATE_CARD)) {
+                const services = categoryData.services;
+                
+                // Find matching service
+                for (const [svcName, price] of Object.entries(services)) {
+                    if (svcName.toLowerCase() === serviceName.toLowerCase() || 
+                        svcName === serviceName) {
+                        // Update ALL price elements
+                        priceElements.forEach(priceEl => {
+                            if (priceEl.textContent.includes('€') || priceEl.textContent.includes('-')) {
+                                priceEl.textContent = '€' + price.toFixed(2);
+                            }
+                        });
+                        console.log(`✅ Updated: ${svcName} = €${price}`);
+                        updated++;
+                        found = true;
+                        break;
+                    }
+                }
+                if (found) break;
+            }
+        });
+        
+        console.log(`Updated ${updated} booking page prices`);
+    }
+</script>
 </body>
 </html>
