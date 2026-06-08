@@ -13,42 +13,40 @@ const BUSINESS = {
 // Rate Card with Tax Information
 const RATE_CARD = {
     "Threading": { tax_rate: 9, services: {
-        "Eyebrows": 5.0, "Upper lip+chin": 5.0, "Forehead": 3.0, "Neck": 5.0, "Side locks": 5.0, "Full face": 12.0
-    }},
-    "Pedicure": { tax_rate: 21, services: {
-        "Legs": 25.0, "French": 32.0, "Ozone": 38.0
-    }},
-    "Manicure": { tax_rate: 21, services: {
-        "Hands": 20.0, "French": 25.0, "Ozone": 28.0
-    }},
-    "Waxing Rica": { tax_rate: 21, services: {
-        "Full face": 12.0, "Full hands": 15.0, "Half hands": 10.0, "Full legs": 25.0, "Half legs": 20.0, "Under arms": 10.0
-    }},
-    "Waxing Brazilian": { tax_rate: 21, services: {
-        "Full face": 15.0, "Full hands": 20.0, "Half hands": 15.0, "Full legs": 30.0, "Half legs": 25.0, "Under arms": 15.0
-    }},
-    "Facials": { tax_rate: 21, services: {
-        "Basic cleanup": [12.0, 15.0], "Fruit": [15.0, 18.0, 23.0], "Silver": [12.0, 15.0],
-        "Gold": [15.0, 22.0, 28.0], "Diamond": [18.0, 25.0], "Pearl": [22.0, 28.0],
-        "Red Wine": [25.0, 32.0], "O3+": 30.0, "Herbal Tree": 25.0, "Herbal Tree Papaya": 28.0,
-        "Gold cream bleach": 15.0, "Party Glow": 20.0
-    }},
-    "De-Tan": { tax_rate: 21, services: {
-        "Twacha": 11.0, "Natures": 15.0, "Raga": 12.0, "O3+": 20.0
-    }},
-    "Hydra Facial": { tax_rate: 21, services: {
-        "40 min": 55.0, "60 min": 76.0, "90 min": 100.0, "LED add-on": 10.0
+        "Eye Brows": 5.0, "Upper Lip+Chin": 5.0, "Forehead": 3.0, "Neck": 5.0, "Side Locks": 5.0, "Full Face": 12.0
     }},
     "Hair": { tax_rate: 9, services: {
-        "Straight cut": 7.0, "Trimming": 10.0, "V/U shape": 12.0, "Layered/Feather cut": 22.0,
-        "Hair wash": 15.0, "Hair spa": 25.0
+        "Straight Cut": 7.0, "Trimming": 10.0, "V Shape": 12.0, "U Shape": 12.0,
+        "Layered Cut": 22.0, "Adv. Layers Cut": 27.0, "Feather Cut": 25.0, "Fringes": 7.0,
+        "Bob A-Line Cut": 30.0, "Normal Hair Wash": 15.0, "Hair Spa": 25.0
     }},
-    "Full Face Wax": { tax_rate: 21, services: {
-        "Full face wax (Except eyebrows)": 15.0
+    "Waxing Rica": { tax_rate: 21, services: {
+        "Back Neck": 10.0, "Full Back": 40.0, "Full Face": 20.0, "Full Hands": 15.0, 
+        "Half Hands": 10.0, "Full Legs": 25.0, "Half Legs": 20.0, "Under Arms": 10.0
+    }},
+    "Waxing Brazilian": { tax_rate: 21, services: {
+        "Back Neck": 15.0, "Full Back": 50.0, "Full Face": 25.0, "Full Hands": 20.0, 
+        "Half Hands": 15.0, "Full Legs": 30.0, "Half Legs": 25.0, "Under Arms": 15.0
+    }},
+    "Pedicure": { tax_rate: 21, services: {
+        "Legs": 30.0, "French": 35.0, "Ozone": 45.0
+    }},
+    "Manicure": { tax_rate: 21, services: {
+        "Hands": 25.0, "French": 30.0, "Ozone": 35.0
+    }},
+    "Regular Facials": { tax_rate: 21, services: {
+        "Basic Cleanup": 18.0, "Fruit Cleanup": 20.0, "Papaya Facial": 30.0,
+        "Silver": 30.0, "Gold": 30.0, "Diamond": 35.0, "Pearl": 38.0, "Red Wine": 32.0,
+        "Fruit": 27.0, "O3+ Seaweed": 35.0, "O3+ Brightening": 40.0,
+        "Detan Raga": 15.0, "Detan Naturals": 18.0, "Detan O3": 20.0,
+        "Gold Cream Bleach": 15.0, "Party Glow": 38.0, "Anti Acne": 33.0
+    }},
+    "Signature Hydra Facial": { tax_rate: 21, services: {
+        "40 Mins": 55.0, "60 Mins": 76.0, "90 Mins": 100.0, "LED Light Add-on": 10.0
     }},
     "Massages": { tax_rate: 21, services: {
-        "Head (30min)": 30.0, "Neck & hands (30min)": 28.0, "Back (40min)": 40.0,
-        "Leg (30min)": 35.0, "Full body (60min)": 65.0
+        "Head (30 mins)": 30.0, "Neck & Hands (30 mins)": 30.0, "Back Massage (40 mins)": 40.0,
+        "Leg (30 mins)": 40.0, "Full Body (60 mins)": 65.0
     }}
 };
 
@@ -533,12 +531,34 @@ function printInvoice() {
     const custName = document.getElementById('custName').value;
     const custPhone = document.getElementById('custPhone').value;
     
+    // Validate customer details
     if (!custName || !custPhone) {
         alert('Please fill in customer name and phone number');
         return;
     }
     
-    window.print();
+    // Validate that services are selected
+    if (!invoiceState.services || invoiceState.services.length === 0) {
+        alert('Please add at least one service before printing');
+        return;
+    }
+    
+    // Validate invoice preview exists
+    const invoicePreview = document.getElementById('invoicePreview');
+    if (!invoicePreview || !invoicePreview.innerHTML) {
+        alert('Invoice preview is empty. Please add services first.');
+        return;
+    }
+    
+    try {
+        // Wait a moment for any pending renders, then print
+        setTimeout(() => {
+            window.print();
+        }, 500);
+    } catch (error) {
+        console.error('Print error:', error);
+        alert('Error opening print dialog: ' + error.message);
+    }
 }
 
 function saveAndNew() {
