@@ -2,118 +2,108 @@
 const WHATSAPP_NUMBER = "31633343093";
 const FORMSPREE_URL   = "https://formspree.io/f/xnjryarb"; // Active Formspree form
 
-// ─── Service catalogue ───────────────────────────────────────────────────────
-const SERVICES = [
-  { group: "Threading", items: [
-    ["Eyebrows", 5], ["Upper lip + chin", 5], ["Forehead", 3],
-    ["Neck", 5], ["Side locks", 5], ["Full face", 12],
-  ]},
-  { group: "Pedicure (incl. polish)", items: [
-    ["Pedicure — Legs", 25], ["Pedicure — French", 32], ["Pedicure — Ozone", 38],
-  ]},
-  { group: "Manicure (incl. polish)", items: [
-    ["Manicure — Hands", 20], ["Manicure — French", 25], ["Manicure — Ozone", 28],
-  ]},
-  { group: "Waxing — Rica",
-    note: "Prices are starting rates. Final cost is based on area size and time required — always confirmed with you before we begin.",
-    items: [
-      ["Full face (Rica)", 12], ["Full hands (Rica)", 15], ["Half hands (Rica)", 10],
-      ["Full legs (Rica)", 25], ["Half legs (Rica)", 20], ["Under arms (Rica)", 10],
-  ]},
-  { group: "Waxing — Brazilian", items: [
-    ["Full face (Brazilian)", 15], ["Full hands (Brazilian)", 20], ["Half hands (Brazilian)", 15],
-    ["Full legs (Brazilian)", 30], ["Half legs (Brazilian)", 25], ["Under arms (Brazilian)", 15],
-  ]},
-  { group: "Regular Facials", items: [
-    ["Basic cleanup", 12], ["Fruit facial", 15], ["Silver facial", 12],
-    ["Gold facial", 15], ["Diamond facial", 18], ["Pearl facial", 22],
-    ["Red Wine facial", 25], ["O3+ Facial", 30], ["Herbal Tree", 25],
-    ["Herbal Tree (Papaya)", 28], ["Gold cream bleach", 15], ["Party Glow", 20],
-  ]},
-  { group: "De-Tan Pack", items: [
-    ["De-Tan — Twacha", 11], ["De-Tan — Natures", 15], ["De-Tan — Raga", 12], ["De-Tan — O3+", 20],
-  ]},
-  { group: "Signature Hydra Facial", items: [
-    ["Hydra 40 mins", 55], ["Hydra 60 mins", 76], ["Hydra 90 mins", 100], ["LED light add-on", 10],
-  ]},
-  { group: "Hair", items: [
-    ["Straight cut", 7], ["Trimming", 10], ["V shape", 12], ["U shape", 12],
-    ["Layered cut", 22], ["Feather cut", 22], ["Normal hair wash", 15], ["Hair spa", 25],
-  ]},
-  { group: "Massages", items: [
-    ["Head (30 mins)", 30], ["Neck & hands (30 mins)", 28], ["Back (40 mins)", 40],
-    ["Leg (30 mins)", 35], ["Full body (60 mins)", 65],
-  ]},
-  { group: "Makeup", items: [
-    ["Basic look", 30], ["HD look", 40],
-  ]},
-];
-
 // ─── App state ────────────────────────────────────────────────────────────────
 const state = { services: [], date: null, time: null };
 
-// ─── Render services ─────────────────────────────────────────────────────────
-const container = document.getElementById("serviceContainer");
-SERVICES.forEach((g, gi) => {
-  const wrap = document.createElement("div");
-  wrap.className = "svc-group";
-  const h = document.createElement("h3");
-  h.textContent = g.group;
-  wrap.appendChild(h);
-  const opts = document.createElement("div");
-  opts.className = "svc-options";
-  g.items.forEach(([name, price], ii) => {
-    const label = document.createElement("label");
-    label.className = "svc-chip";
-    label.innerHTML = `<input type="checkbox" value="${name}" data-price="${price}">
-      <span>${name}</span><span class="price">€${price}</span>`;
-    const input = label.querySelector("input");
-    input.addEventListener("change", () => {
-      label.classList.toggle("checked", input.checked);
-      if (input.checked) state.services.push({ name, price });
-      else state.services = state.services.filter(s => s.name !== name);
-      updateSummary();
-    });
-    opts.appendChild(label);
-  });
-  wrap.appendChild(opts);
-  if (g.note) {
-    const note = document.createElement("p");
-    note.className = "price-note booking-note";
-    note.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex:none;margin-top:1px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> ${g.note}`;
-    wrap.appendChild(note);
-  }
-  container.appendChild(wrap);
-});
+// ─── Load services from rate_card.json and render ────────────────────────────
+async function initBooking() {
+  try {
+    const response = await fetch('rate_card.json');
+    if (!response.ok) throw new Error('Failed to load rate_card.json');
+    const rateCard = await response.json();
 
-// ─── Render dates (next 7 days) ───────────────────────────────────────────────
-const DOWS = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
-const MONS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-const dateGrid = document.getElementById("dateGrid");
-for (let i = 1; i <= 15; i++) {
-  const d = new Date();
-  d.setDate(d.getDate() + i);
-  const card = document.createElement("div");
-  card.className = "date-card";
-  const label = i === 1 ? "Tomorrow" : DOWS[d.getDay()];
-  card.innerHTML = `<div class="dow">${label}</div>
-    <div class="dnum">${d.getDate()}</div>
-    <div class="mon">${MONS[d.getMonth()]}</div>`;
-  const human = `${DOWS[d.getDay()]} ${d.getDate()} ${MONS[d.getMonth()]} ${d.getFullYear()}`;
-  card.addEventListener("click", () => {
-    document.querySelectorAll(".date-card").forEach(c => c.classList.remove("checked"));
-    card.classList.add("checked");
-    state.date = human;
-    updateSummary();
-  });
-  dateGrid.appendChild(card);
+    const container = document.getElementById("serviceContainer");
+    container.innerHTML = "";
+
+    Object.entries(rateCard).forEach(([categoryKey, categoryData]) => {
+      const wrap = document.createElement("div");
+      wrap.className = "svc-group";
+
+      const h = document.createElement("h3");
+      h.textContent = categoryData.name;
+      wrap.appendChild(h);
+
+      const opts = document.createElement("div");
+      opts.className = "svc-options";
+
+      Object.entries(categoryData.services).forEach(([serviceId, serviceData]) => {
+        const name  = serviceData.name;
+        const price = serviceData.price;
+
+        const label = document.createElement("label");
+        label.className = "svc-chip";
+        label.innerHTML = `<input type="checkbox" value="${name}" data-price="${price}">
+          <span>${name}</span><span class="price">€${price}</span>`;
+
+        const input = label.querySelector("input");
+        input.addEventListener("change", () => {
+          label.classList.toggle("checked", input.checked);
+          if (input.checked) state.services.push({ name, price });
+          else state.services = state.services.filter(s => s.name !== name);
+          updateSummary();
+        });
+        opts.appendChild(label);
+      });
+
+      wrap.appendChild(opts);
+
+      // Add waxing note
+      if (categoryKey === "waxing_rica" || categoryKey === "waxing_brazilian") {
+        const note = document.createElement("p");
+        note.className = "price-note booking-note";
+        note.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex:none;margin-top:1px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> Prices are starting rates. Final cost is based on area size and time required — always confirmed with you before we begin.`;
+        wrap.appendChild(note);
+      }
+
+      container.appendChild(wrap);
+    });
+
+    // Render dates and times after services are loaded
+    renderDates();
+    generateTimeSlots(false);
+
+  } catch (error) {
+    console.error('❌ Error loading rate_card.json:', error);
+    document.getElementById("serviceContainer").innerHTML =
+      '<p style="color:red;padding:1rem">Error loading services. Please refresh the page.</p>';
+  }
 }
 
-// ─── Render time slots (weekday 14:00–19:00, weekend 10:00–20:00, every 30 min) ───
-const timeGrid = document.getElementById("timeGrid");
-const dateCards = document.querySelectorAll(".date-card");
+// Start loading
+initBooking();
 
+// ─── Render dates (next 15 days) ─────────────────────────────────────────────
+const DOWS = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+const MONS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+function renderDates() {
+  const dateGrid = document.getElementById("dateGrid");
+  dateGrid.innerHTML = "";
+  for (let i = 1; i <= 15; i++) {
+    const d = new Date();
+    d.setDate(d.getDate() + i);
+    const card = document.createElement("div");
+    card.className = "date-card";
+    const label = i === 1 ? "Tomorrow" : DOWS[d.getDay()];
+    card.innerHTML = `<div class="dow">${label}</div>
+      <div class="dnum">${d.getDate()}</div>
+      <div class="mon">${MONS[d.getMonth()]}</div>`;
+    const human = `${DOWS[d.getDay()]} ${d.getDate()} ${MONS[d.getMonth()]} ${d.getFullYear()}`;
+    card.addEventListener("click", () => {
+      document.querySelectorAll(".date-card").forEach(c => c.classList.remove("checked"));
+      card.classList.add("checked");
+      state.date = human;
+      const isWeekend = d.getDay() === 0 || d.getDay() === 6;
+      generateTimeSlots(isWeekend);
+      updateSummary();
+    });
+    dateGrid.appendChild(card);
+  }
+}
+
+// ─── Render time slots ────────────────────────────────────────────────────────
 function generateTimeSlots(isWeekend) {
+  const timeGrid = document.getElementById("timeGrid");
   timeGrid.innerHTML = "";
   const startHour = isWeekend ? 10 : 14;
   const endHour = isWeekend ? 20 : 19;
@@ -132,21 +122,6 @@ function generateTimeSlots(isWeekend) {
     });
   }
 }
-
-// Initial render (assume weekday)
-generateTimeSlots(false);
-
-// Update time slots when date changes
-dateCards.forEach((card, idx) => {
-  card.addEventListener("click", () => {
-    const d = new Date();
-    d.setDate(d.getDate() + (idx + 1)); // idx+1 because we start from day 1, not day 0
-    const isWeekend = d.getDay() === 0 || d.getDay() === 6;
-    generateTimeSlots(isWeekend);
-  });
-});
-
-// ─── Summary bar ─────────────────────────────────────────────────────────────
 function updateSummary() {
   const total = state.services.reduce((s, x) => s + x.price, 0);
   document.getElementById("sumTotal").textContent = "€" + total;
