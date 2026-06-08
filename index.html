@@ -527,7 +527,12 @@
         }
 
         console.log('Processing price list items...');
-        const priceLists = document.querySelectorAll('.price-list li');
+
+        // Only update single-price rows — skip waxing (class="price-list wax")
+        // because waxing has two separate columns (Rica + Brazilian) already
+        // hardcoded correctly in the HTML; the JS updater would overwrite both
+        // columns with whichever category it finds first (Rica), making them identical.
+        const priceLists = document.querySelectorAll('.price-list:not(.wax) li');
         let updated = 0;
         
         priceLists.forEach(item => {
@@ -543,16 +548,10 @@
             for (const [categoryName, categoryData] of Object.entries(RATE_CARD)) {
                 const services = categoryData.services;
                 
-                // Find matching service by name
                 for (const [svcName, price] of Object.entries(services)) {
-                    if (svcName.toLowerCase() === serviceName.toLowerCase() || 
-                        svcName === serviceName) {
-                        // Update ALL price elements in this item (for two-column waxing display)
-                        priceElements.forEach(priceEl => {
-                            if (priceEl.textContent.includes('€') || priceEl.textContent.includes('-')) {
-                                priceEl.textContent = '€' + price.toFixed(2);
-                            }
-                        });
+                    if (svcName === serviceName) {
+                        // Single price element — safe to update
+                        priceElements[0].textContent = '€' + price.toFixed(2);
                         console.log(`✅ Updated: ${svcName} = €${price}`);
                         updated++;
                         found = true;
