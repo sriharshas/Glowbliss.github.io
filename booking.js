@@ -31,6 +31,7 @@ async function initBooking() {
         const price = serviceData.price;
 
         const priceOnRequest = (name === "Normal Hair Wash" || name === "Hair Spa");
+        const priceLabel = priceOnRequest ? "Depends on hair volume & length" : `€${price}`;
         const label = document.createElement("label");
         label.className = "svc-chip";
         label.innerHTML = `<input type="checkbox" value="${name}" data-price="${price}">
@@ -39,7 +40,7 @@ async function initBooking() {
         const input = label.querySelector("input");
         input.addEventListener("change", () => {
           label.classList.toggle("checked", input.checked);
-          if (input.checked) state.services.push({ name, price });
+          if (input.checked) state.services.push({ name, price, priceLabel });
           else state.services = state.services.filter(s => s.name !== name);
           updateSummary();
         });
@@ -124,8 +125,11 @@ function generateTimeSlots(isWeekend) {
   }
 }
 function updateSummary() {
-  const total = state.services.reduce((s, x) => s + x.price, 0);
-  document.getElementById("sumTotal").textContent = "€" + total;
+  // Only sum services that have a fixed price; exclude price-on-request ones
+  const fixedServices = state.services.filter(x => x.priceLabel.startsWith('€'));
+  const total = fixedServices.reduce((s, x) => s + x.price, 0);
+  const hasOnRequest = state.services.some(x => !x.priceLabel.startsWith('€'));
+  document.getElementById("sumTotal").textContent = "€" + total + (hasOnRequest ? " + price on request" : "");
   const n = state.services.length;
   let txt = n === 0 ? "No services selected yet" : `${n} service${n > 1 ? "s" : ""}`;
   if (state.date) txt += ` · ${state.date}`;
@@ -153,13 +157,19 @@ document.getElementById("submitWa").addEventListener("click", () => {
   if (!validateBooking()) return;
   const name  = document.getElementById("custName").value.trim();
   const note  = document.getElementById("custNote").value.trim();
-  const total = state.services.reduce((s, x) => s + x.price, 0);
+  const fixedServices = state.services.filter(x => x.priceLabel.startsWith('€'));
+  const total = fixedServices.reduce((s, x) => s + x.price, 0);
+  const hasOnRequest = state.services.some(x => !x.priceLabel.startsWith('€'));
 
   let msg = "*New Appointment Request — Glow Bliss*\n\n";
   if (name) msg += `*Name:* ${name}\n`;
   msg += `*Date:* ${state.date}\n*Time:* ${state.time}\n\n*Services:*\n`;
-  state.services.forEach(s => { msg += `• ${s.name} — €${s.price}\n`; });
-  msg += `\n*Estimated total: €${total}*\n`;
+  state.services.forEach(s => { msg += `• ${s.name} — ${s.priceLabel}\n`; });
+  if (hasOnRequest) {
+    msg += `\n*Estimated total: €${total} + price on request for hair services*\n`;
+  } else {
+    msg += `\n*Estimated total: €${total}*\n`;
+  }
   if (note) msg += `\n*Note:* ${note}\n`;
   msg += `\nPlease confirm my appointment. Thank you!`;
 
@@ -201,8 +211,11 @@ submitEmail.addEventListener("click", () => {
 async function submitToFormspree(email, phone) {
   const name  = document.getElementById("custName").value.trim();
   const note  = document.getElementById("custNote").value.trim();
-  const total = state.services.reduce((s, x) => s + x.price, 0);
-  const servicesList = state.services.map(s => `${s.name} — €${s.price}`).join("\n");
+  const fixedServices = state.services.filter(x => x.priceLabel.startsWith('€'));
+  const total = fixedServices.reduce((s, x) => s + x.price, 0);
+  const hasOnRequest = state.services.some(x => !x.priceLabel.startsWith('€'));
+  const servicesList = state.services.map(s => `${s.name} — ${s.priceLabel}`).join("\n");
+  const totalLabel = hasOnRequest ? `€${total} + price on request for hair services` : `€${total} (estimated)`;
 
   // Fill hidden form fields
   document.getElementById("fs_name").value     = name || "Not provided";
@@ -212,7 +225,7 @@ async function submitToFormspree(email, phone) {
   document.getElementById("fs_date").value     = state.date;
   document.getElementById("fs_time").value     = state.time;
   document.getElementById("fs_services").value = servicesList;
-  document.getElementById("fs_total").value    = `€${total} (estimated)`;
+  document.getElementById("fs_total").value    = totalLabel;
   document.getElementById("fs_note").value     = note || "None";
 
   // Disable button while submitting
@@ -263,7 +276,7 @@ function showSuccess(name, email, phone, total) {
       <div class="sd-row"><span>Date</span><b>${state.date}</b></div>
       <div class="sd-row"><span>Time</span><b>${state.time}</b></div>
       <div class="sd-row"><span>Services</span><b>${state.services.length} selected</b></div>
-      <div class="sd-row"><span>Estimated total</span><b>€${total}</b></div>
+      <div class="sd-row"><span>Estimated total</span><b>${totalLabel}</b></div>
       ${email ? `<div class="sd-row"><span>We'll reply to</span><b>${email}</b></div>` : ""}
       ${phone ? `<div class="sd-row"><span>Or call/WhatsApp</span><b>${phone}</b></div>` : ""}
     </div>`;

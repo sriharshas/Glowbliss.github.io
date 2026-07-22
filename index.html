@@ -543,6 +543,9 @@
             const priceElements = item.querySelectorAll('b');
             if (priceElements.length === 0) return;
 
+            // Skip price-on-request items — their <b> shows custom text, not a price
+            if (priceElements[0].classList.contains('price-on-request')) return;
+
             // Search through all categories in RATE_CARD
             let found = false;
             for (const [categoryName, categoryData] of Object.entries(RATE_CARD)) {
