@@ -30,10 +30,11 @@ async function initBooking() {
         const name  = serviceData.name;
         const price = serviceData.price;
 
+        const priceOnRequest = (name === "Normal Hair Wash" || name === "Hair Spa");
         const label = document.createElement("label");
         label.className = "svc-chip";
         label.innerHTML = `<input type="checkbox" value="${name}" data-price="${price}">
-          <span>${name}</span><span class="price">€${price}</span>`;
+          <span>${name}</span><span class="price${priceOnRequest ? ' price-on-request' : ''}">${priceOnRequest ? 'Depends on hair volume &amp; length' : '€' + price}</span>`;
 
         const input = label.querySelector("input");
         input.addEventListener("change", () => {

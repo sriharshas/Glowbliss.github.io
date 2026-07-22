@@ -24,8 +24,8 @@
       "feather_cut": { "name": "Feather Cut", "price": 25 },
       "fringes": { "name": "Fringes", "price": 7 },
       "bob_aline_cut": { "name": "Bob A-Line Cut", "price": 30 },
-      "normal_hair_wash": { "name": "Normal Hair Wash", "price": 15, "note": "*Depends on hair length" },
-      "hair_spa": { "name": "Hair Spa", "price": 25, "note": "*Includes: head massage, steam, wash" }
+      "normal_hair_wash": { "name": "Normal Hair Wash", "price": 15, "note": "Depends on hair volume & length" },
+      "hair_spa": { "name": "Hair Spa", "price": 25, "note": "Depends on hair volume & length. Includes: head massage, steam, wash" }
     }
   },
   "waxing_rica": {
