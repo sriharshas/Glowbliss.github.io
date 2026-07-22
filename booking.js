@@ -166,7 +166,9 @@ document.getElementById("submitWa").addEventListener("click", () => {
   if (name) msg += `*Name:* ${name}\n`;
   msg += `*Date:* ${state.date}\n*Time:* ${state.time}\n\n*Services:*\n`;
   state.services.forEach(s => { msg += `• ${s.name} — ${s.priceLabel}\n`; });
-  if (hasOnRequest) {
+  if (hasOnRequest && total === 0) {
+    msg += `\n*Estimated total: Price on request for hair services*\n`;
+  } else if (hasOnRequest) {
     msg += `\n*Estimated total: €${total} + price on request for hair services*\n`;
   } else {
     msg += `\n*Estimated total: €${total}*\n`;
@@ -216,7 +218,11 @@ async function submitToFormspree(email, phone) {
   const total = fixedServices.reduce((s, x) => s + x.price, 0);
   const hasOnRequest = state.services.some(x => !!x.priceOnRequest);
   const servicesList = state.services.map(s => `${s.name} — ${s.priceLabel}`).join("\n");
-  const totalLabel = hasOnRequest ? `€${total} + price on request for hair services` : `€${total} (estimated)`;
+  const totalLabel = hasOnRequest && total === 0
+    ? "Price on request for hair services"
+    : hasOnRequest
+    ? `€${total} + price on request for hair services`
+    : `€${total} (estimated)`;
 
   // Fill hidden form fields
   document.getElementById("fs_name").value     = name || "Not provided";
