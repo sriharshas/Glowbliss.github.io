@@ -29,6 +29,7 @@ async function initBooking() {
       Object.entries(categoryData.services).forEach(([serviceId, serviceData]) => {
         const name  = serviceData.name;
         const price = serviceData.price;
+        const category = categoryData.name;
 
         const priceOnRequest = (name === "Normal Hair Wash" || name === "Hair Spa");
         const priceLabel = priceOnRequest ? "Depends on hair volume & length" : `€${price}`;
@@ -40,7 +41,7 @@ async function initBooking() {
         const input = label.querySelector("input");
         input.addEventListener("change", () => {
           label.classList.toggle("checked", input.checked);
-          if (input.checked) state.services.push({ name, price, priceLabel, priceOnRequest });
+          if (input.checked) state.services.push({ name, price, priceLabel, priceOnRequest, category });
           else state.services = state.services.filter(s => s.name !== name);
           updateSummary();
         });
@@ -165,7 +166,7 @@ document.getElementById("submitWa").addEventListener("click", () => {
   let msg = "*New Appointment Request — Glow Bliss*\n\n";
   if (name) msg += `*Name:* ${name}\n`;
   msg += `*Date:* ${state.date}\n*Time:* ${state.time}\n\n*Services:*\n`;
-  state.services.forEach(s => { msg += `• ${s.name} — ${s.priceLabel}\n`; });
+  state.services.forEach(s => { msg += `• ${s.category} — ${s.name} — ${s.priceLabel}\n`; });
   if (hasOnRequest && total === 0) {
     msg += `\n*Estimated total: Price on request for hair services*\n`;
   } else if (hasOnRequest) {
@@ -217,7 +218,7 @@ async function submitToFormspree(email, phone) {
   const fixedServices = state.services.filter(x => !x.priceOnRequest);
   const total = fixedServices.reduce((s, x) => s + x.price, 0);
   const hasOnRequest = state.services.some(x => !!x.priceOnRequest);
-  const servicesList = state.services.map(s => `${s.name} — ${s.priceLabel}`).join("\n");
+  const servicesList = state.services.map(s => `${s.category} — ${s.name} — ${s.priceLabel}`).join("\n");
   const totalLabel = hasOnRequest && total === 0
     ? "Price on request for hair services"
     : hasOnRequest
