@@ -1,8 +1,11 @@
 /* ===== Glow Bliss — booking.js ===== */
 const WHATSAPP_NUMBER = "31633343093";
 const FORMSPREE_URL   = "https://formspree.io/f/xnjryarb"; // Active Formspree form
+const PRICE_NOTE      = "Prices will be confirmed at the salon.";
 
 // ─── App state ────────────────────────────────────────────────────────────────
+// Each selected service is { name, category }. Names repeat across categories
+// (e.g. "Full Face" in Threading and both Waxing types), so always match on both.
 const state = { services: [], date: null, time: null };
 
 // ─── Load services from rate_card.json and render ────────────────────────────
@@ -26,23 +29,26 @@ async function initBooking() {
       const opts = document.createElement("div");
       opts.className = "svc-options";
 
-      Object.entries(categoryData.services).forEach(([serviceId, serviceData]) => {
-        const name  = serviceData.name;
-        const price = serviceData.price;
+      Object.values(categoryData.services).forEach((serviceData) => {
+        const name     = serviceData.name;
         const category = categoryData.name;
 
-        const priceOnRequest = (name === "Normal Hair Wash" || name === "Hair Spa");
-        const priceLabel = priceOnRequest ? "Depends on hair volume & length" : `€${price}`;
         const label = document.createElement("label");
         label.className = "svc-chip";
-        label.innerHTML = `<input type="checkbox" value="${name}" data-price="${price}">
-          <span>${name}</span><span class="price${priceOnRequest ? ' price-on-request' : ''}">${priceOnRequest ? 'Depends on hair volume &amp; length' : '€' + price}</span>`;
+        label.innerHTML = `<input type="checkbox"><span></span>`;
+        label.querySelector("span").textContent = name;
 
         const input = label.querySelector("input");
+        input.value = name;
         input.addEventListener("change", () => {
           label.classList.toggle("checked", input.checked);
-          if (input.checked) state.services.push({ name, price, priceLabel, priceOnRequest, category });
-          else state.services = state.services.filter(s => s.name !== name);
+          if (input.checked) {
+            state.services.push({ name, category });
+          } else {
+            state.services = state.services.filter(
+              s => !(s.name === name && s.category === category)
+            );
+          }
           updateSummary();
         });
         opts.appendChild(label);
@@ -54,7 +60,7 @@ async function initBooking() {
       if (categoryKey === "waxing_rica" || categoryKey === "waxing_brazilian") {
         const note = document.createElement("p");
         note.className = "price-note booking-note";
-        note.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex:none;margin-top:1px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> Prices are starting rates. Final cost is based on area size and time required — always confirmed with you before we begin.`;
+        note.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex:none;margin-top:1px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> Final details are confirmed with you before we begin.`;
         wrap.appendChild(note);
       }
 
@@ -108,6 +114,7 @@ function renderDates() {
 function generateTimeSlots(isWeekend) {
   const timeGrid = document.getElementById("timeGrid");
   timeGrid.innerHTML = "";
+  state.time = null; // slots are re-rendered, so any previous pick is cleared
   const startHour = isWeekend ? 10 : 14;
   const endHour = isWeekend ? 20 : 19;
   for (let h = startHour; h <= endHour; h++) {
@@ -125,18 +132,18 @@ function generateTimeSlots(isWeekend) {
     });
   }
 }
+
+// ─── Summary bar: service count instead of a total ───────────────────────────
 function updateSummary() {
-  const fixedServices = state.services.filter(x => !x.priceOnRequest);
-  const total = fixedServices.reduce((s, x) => s + x.price, 0);
-  const hasOnRequest = state.services.some(x => x.priceOnRequest);
-  document.getElementById("sumTotal").textContent = hasOnRequest && total === 0
-    ? "Price on request"
-    : "€" + total + (hasOnRequest ? " + price on request" : "");
   const n = state.services.length;
-  let txt = n === 0 ? "No services selected yet" : `${n} service${n > 1 ? "s" : ""}`;
-  if (state.date) txt += ` · ${state.date}`;
-  if (state.time) txt += ` · ${state.time}`;
-  document.getElementById("sumText").textContent = txt;
+  document.getElementById("sumTotal").textContent =
+    n === 0 ? "No services yet" : `${n} service${n > 1 ? "s" : ""} selected`;
+
+  const parts = [];
+  if (state.date) parts.push(state.date);
+  if (state.time) parts.push(state.time);
+  document.getElementById("sumText").textContent =
+    parts.length ? parts.join(" · ") : (n === 0 ? "Pick your services above" : "Now pick a date and time");
 }
 
 // ─── Shared validation ────────────────────────────────────────────────────────
@@ -159,21 +166,12 @@ document.getElementById("submitWa").addEventListener("click", () => {
   if (!validateBooking()) return;
   const name  = document.getElementById("custName").value.trim();
   const note  = document.getElementById("custNote").value.trim();
-  const fixedServices = state.services.filter(x => !x.priceOnRequest);
-  const total = fixedServices.reduce((s, x) => s + x.price, 0);
-  const hasOnRequest = state.services.some(x => !!x.priceOnRequest);
 
   let msg = "*New Appointment Request — Glow Bliss*\n\n";
   if (name) msg += `*Name:* ${name}\n`;
   msg += `*Date:* ${state.date}\n*Time:* ${state.time}\n\n*Services:*\n`;
-  state.services.forEach(s => { msg += `• ${s.category} — ${s.name} — ${s.priceLabel}\n`; });
-  if (hasOnRequest && total === 0) {
-    msg += `\n*Estimated total: Price on request for hair services*\n`;
-  } else if (hasOnRequest) {
-    msg += `\n*Estimated total: €${total} + price on request for hair services*\n`;
-  } else {
-    msg += `\n*Estimated total: €${total}*\n`;
-  }
+  state.services.forEach(s => { msg += `• ${s.category} — ${s.name}\n`; });
+  msg += `\n${PRICE_NOTE}\n`;
   if (note) msg += `\n*Note:* ${note}\n`;
   msg += `\nPlease confirm my appointment. Thank you!`;
 
@@ -215,15 +213,8 @@ submitEmail.addEventListener("click", () => {
 async function submitToFormspree(email, phone) {
   const name  = document.getElementById("custName").value.trim();
   const note  = document.getElementById("custNote").value.trim();
-  const fixedServices = state.services.filter(x => !x.priceOnRequest);
-  const total = fixedServices.reduce((s, x) => s + x.price, 0);
-  const hasOnRequest = state.services.some(x => !!x.priceOnRequest);
-  const servicesList = state.services.map(s => `${s.category} — ${s.name} — ${s.priceLabel}`).join("\n");
-  const totalLabel = hasOnRequest && total === 0
-    ? "Price on request for hair services"
-    : hasOnRequest
-    ? `€${total} + price on request for hair services`
-    : `€${total} (estimated)`;
+  const servicesList = state.services.map(s => `${s.category} — ${s.name}`).join("\n")
+    + `\n\n${PRICE_NOTE}`;
 
   // Fill hidden form fields
   document.getElementById("fs_name").value     = name || "Not provided";
@@ -233,7 +224,6 @@ async function submitToFormspree(email, phone) {
   document.getElementById("fs_date").value     = state.date;
   document.getElementById("fs_time").value     = state.time;
   document.getElementById("fs_services").value = servicesList;
-  document.getElementById("fs_total").value    = totalLabel;
   document.getElementById("fs_note").value     = note || "None";
 
   // Disable button while submitting
@@ -249,7 +239,7 @@ async function submitToFormspree(email, phone) {
     });
 
     if (resp.ok) {
-      showSuccess(name, email, phone, total);
+      showSuccess(email, phone);
     } else {
       const data = await resp.json().catch(() => ({}));
       const msg = data?.errors?.map(e => e.message).join(", ") || "Unknown error";
@@ -271,7 +261,7 @@ async function submitToFormspree(email, phone) {
 }
 
 // ─── Success state ────────────────────────────────────────────────────────────
-function showSuccess(name, email, phone, total) {
+function showSuccess(email, phone) {
   // Hide everything except success message
   document.getElementById("summaryBar").style.display = "none";
   emailPanel.style.display = "none";
@@ -284,10 +274,16 @@ function showSuccess(name, email, phone, total) {
       <div class="sd-row"><span>Date</span><b>${state.date}</b></div>
       <div class="sd-row"><span>Time</span><b>${state.time}</b></div>
       <div class="sd-row"><span>Services</span><b>${state.services.length} selected</b></div>
-      <div class="sd-row"><span>Estimated total</span><b>${totalLabel}</b></div>
-      ${email ? `<div class="sd-row"><span>We'll reply to</span><b>${email}</b></div>` : ""}
-      ${phone ? `<div class="sd-row"><span>Or call/WhatsApp</span><b>${phone}</b></div>` : ""}
+      <div class="sd-row"><span>Prices</span><b>Confirmed at the salon</b></div>
+      ${email ? `<div class="sd-row"><span>We'll reply to</span><b></b></div>` : ""}
+      ${phone ? `<div class="sd-row"><span>Or call/WhatsApp</span><b></b></div>` : ""}
     </div>`;
+
+  // Insert customer-typed values as text, not HTML
+  const rows = det.querySelectorAll(".sd-row b");
+  let i = 4;
+  if (email) rows[i++].textContent = email;
+  if (phone) rows[i++].textContent = phone;
 
   msg.style.display = "block";
   msg.scrollIntoView({ behavior: "smooth", block: "start" });
