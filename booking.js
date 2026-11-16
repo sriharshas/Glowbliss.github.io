@@ -1,7 +1,6 @@
 /* ===== Glow Bliss — booking.js ===== */
 const WHATSAPP_NUMBER = "31633343093";
 const FORMSPREE_URL   = "https://formspree.io/f/xnjryarb"; // Active Formspree form
-const PRICE_NOTE      = "Prices will be confirmed at the salon.";
 
 // ─── App state ────────────────────────────────────────────────────────────────
 // Each selected service is { name, category }. Names repeat across categories
@@ -56,11 +55,11 @@ async function initBooking() {
 
       wrap.appendChild(opts);
 
-      // Add waxing note
-      if (categoryKey === "waxing_rica" || categoryKey === "waxing_brazilian") {
+      // One waxing note, shown once after the last waxing group
+      if (categoryKey === "waxing_brazilian") {
         const note = document.createElement("p");
         note.className = "price-note booking-note";
-        note.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex:none;margin-top:1px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> Final details are confirmed with you before we begin.`;
+        note.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex:none;margin-top:1px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Not sure whether to pick Rica or Brazilian? Choose either one and mention it in your message in step 4 — we'll advise you.</span>`;
         wrap.appendChild(note);
       }
 
@@ -171,7 +170,6 @@ document.getElementById("submitWa").addEventListener("click", () => {
   if (name) msg += `*Name:* ${name}\n`;
   msg += `*Date:* ${state.date}\n*Time:* ${state.time}\n\n*Services:*\n`;
   state.services.forEach(s => { msg += `• ${s.category} — ${s.name}\n`; });
-  msg += `\n${PRICE_NOTE}\n`;
   if (note) msg += `\n*Note:* ${note}\n`;
   msg += `\nPlease confirm my appointment. Thank you!`;
 
@@ -213,8 +211,7 @@ submitEmail.addEventListener("click", () => {
 async function submitToFormspree(email, phone) {
   const name  = document.getElementById("custName").value.trim();
   const note  = document.getElementById("custNote").value.trim();
-  const servicesList = state.services.map(s => `${s.category} — ${s.name}`).join("\n")
-    + `\n\n${PRICE_NOTE}`;
+  const servicesList = state.services.map(s => `${s.category} — ${s.name}`).join("\n");
 
   // Fill hidden form fields
   document.getElementById("fs_name").value     = name || "Not provided";
@@ -274,14 +271,13 @@ function showSuccess(email, phone) {
       <div class="sd-row"><span>Date</span><b>${state.date}</b></div>
       <div class="sd-row"><span>Time</span><b>${state.time}</b></div>
       <div class="sd-row"><span>Services</span><b>${state.services.length} selected</b></div>
-      <div class="sd-row"><span>Prices</span><b>Confirmed at the salon</b></div>
       ${email ? `<div class="sd-row"><span>We'll reply to</span><b></b></div>` : ""}
       ${phone ? `<div class="sd-row"><span>Or call/WhatsApp</span><b></b></div>` : ""}
     </div>`;
 
   // Insert customer-typed values as text, not HTML
   const rows = det.querySelectorAll(".sd-row b");
-  let i = 4;
+  let i = 3;
   if (email) rows[i++].textContent = email;
   if (phone) rows[i++].textContent = phone;
 
