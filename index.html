@@ -73,7 +73,6 @@
       "closes": "19:30"
     }
   ],
-  "priceRange": "€3-€100",
   "aggregateRating": {
     "@type": "AggregateRating",
     "ratingValue": "5.0",
@@ -132,6 +131,14 @@
   background: linear-gradient(135deg, var(--bg2) 0%, var(--accent-l) 100%);
   min-height: 10px;
 }
+/* Treatment menu (no prices): tighter rows, long lists in two columns */
+.menu-intro { color: var(--ink-soft); margin-top: 1rem; font-size: 1.02rem; }
+.price-list li { padding: .75rem 0; }
+.price-block.wide .price-list { columns: 2; column-gap: 2.4rem; }
+.price-block.wide .price-list li { break-inside: avoid; }
+@media (max-width: 1024px) {
+  .price-block.wide .price-list { columns: 1; }
+}
 </style>
 </head>
 <body>
@@ -169,7 +176,7 @@
   </a>
   <nav class="nav-links">
     <a href="#services">Services</a>
-    <a href="#prices">Prices</a>
+    <a href="#menu">Menu</a>
     <a href="#contact">Contact</a>
   </nav>
   <a href="book.html" class="btn-book nav-book">Book Now</a>
@@ -179,7 +186,7 @@
 </header>
 <div class="mobile-menu" id="mobileMenu">
   <a href="#services">Services</a>
-  <a href="#prices">Prices</a>
+  <a href="#menu">Menu</a>
   <a href="#contact">Contact</a>
   <a href="book.html" class="btn-book">Book Now</a>
 </div>
@@ -194,7 +201,7 @@
       <p class="lede">A calm, caring space in Almere Buiten where every treatment is done with utmost care. Premium services, painless threading, and that fresh after-glow — all at honest, affordable prices.</p>
       <div class="hero-cta">
         <a href="book.html" class="btn-book btn-lg">Book an Appointment</a>
-        <a href="#prices" class="btn-ghost">View Price List</a>
+        <a href="#menu" class="btn-ghost">View Treatment Menu</a>
       </div>
       <div class="hero-stats">
         <a class="stat google-badge" href="https://maps.app.goo.gl/5rUgEyr7YFbKQKYJ8" target="_blank" rel="noopener" title="See our Google reviews">
@@ -242,7 +249,6 @@
       <div class="sc-body">
         <h3>Threading</h3>
         <p>Eyebrows · Upper lip+chin · Forehead · Neck · Side locks · Full face</p>
-        <span class="sc-price">from €3</span>
       </div>
     </article>
 
@@ -251,7 +257,6 @@
       <div class="sc-body">
         <h3>Pedicure &amp; Manicure</h3>
         <p>Pedicure — Legs / French / Ozone · Manicure — Hands / French / Ozone</p>
-        <span class="sc-price">from €25</span>
       </div>
     </article>
 
@@ -260,7 +265,6 @@
       <div class="sc-body">
         <h3>Waxing</h3>
         <p>Full face / hands / legs · Half hands / legs · Under arms · Rica &amp; Brazilian</p>
-        <span class="sc-price">from €10</span>
       </div>
     </article>
 
@@ -269,7 +273,6 @@
       <div class="sc-body">
         <h3>Facial</h3>
         <p>Basic Cleanup · Silver · Gold · Diamond · Pearl · Red Wine · Papaya · O3+ · Anti Acne · Party Glow</p>
-        <span class="sc-price">from €15</span>
       </div>
     </article>
 
@@ -278,7 +281,6 @@
       <div class="sc-body">
         <h3>Signature Hydra Facial</h3>
         <p>40 / 60 / 90 mins · LED light add-on · Steam, tan pack &amp; deep cleansing</p>
-        <span class="sc-price">from €55</span>
       </div>
     </article>
 
@@ -287,7 +289,6 @@
       <div class="sc-body">
         <h3>Hair</h3>
         <p>Straight / U / V shape · Trimming · Layered &amp; feather cut · Hair spa</p>
-        <span class="sc-price">from €7</span>
       </div>
     </article>
 
@@ -296,132 +297,127 @@
       <div class="sc-body">
         <h3>Massage</h3>
         <p>Head · Neck &amp; hands · Back massage · Leg · Full body (60 mins)</p>
-        <span class="sc-price">from €30</span>
       </div>
     </article>
 
   </div>
 </section>
 
-<!-- PRICE LIST -->
-<section class="prices" id="prices">
+<!-- TREATMENT MENU -->
+<section class="prices" id="menu">
   <div class="section-head reveal">
-    <p class="eyebrow center">Price List · Updated 07-06</p>
-    <h2>Transparent pricing,<br/>no surprises</h2>
+    <p class="eyebrow center">Our Treatment Menu</p>
+    <h2>Everything we offer,<br/>all in one place</h2>
+    <p class="menu-intro">Prices will be confirmed at the salon.</p>
   </div>
   <div class="price-wrap">
 
     <div class="price-block reveal">
       <h3>Threading</h3>
       <ul class="price-list">
-        <li><span>Eye Brows</span><i></i><b>€5</b></li>
-        <li><span>Upper Lip+Chin</span><i></i><b>€5</b></li>
-        <li><span>Forehead</span><i></i><b>€3</b></li>
-        <li><span>Neck</span><i></i><b>€5</b></li>
-        <li><span>Side Locks</span><i></i><b>€5</b></li>
-        <li><span>Full Face</span><i></i><b>€12</b></li>
+        <li><span>Eye Brows</span></li>
+        <li><span>Upper Lip+Chin</span></li>
+        <li><span>Forehead</span></li>
+        <li><span>Neck</span></li>
+        <li><span>Side Locks</span></li>
+        <li><span>Full Face</span></li>
       </ul>
     </div>
 
     <div class="price-block reveal">
       <h3>Pedicure <small>incl. nail polish</small></h3>
       <ul class="price-list">
-        <li><span>Legs</span><i></i><b>€30</b></li>
-        <li><span>French</span><i></i><b>€35</b></li>
-        <li><span>Ozone</span><i></i><b>€45</b></li>
+        <li><span>Legs</span></li>
+        <li><span>French</span></li>
+        <li><span>Ozone</span></li>
       </ul>
     </div>
 
     <div class="price-block reveal">
       <h3>Manicure <small>incl. nail polish</small></h3>
       <ul class="price-list">
-        <li><span>Hands</span><i></i><b>€25</b></li>
-        <li><span>French</span><i></i><b>€30</b></li>
-        <li><span>Ozone</span><i></i><b>€35</b></li>
+        <li><span>Hands</span></li>
+        <li><span>French</span></li>
+        <li><span>Ozone</span></li>
       </ul>
     </div>
 
     <div class="price-block reveal wide">
-      <h3>Waxing</h3>
-      <p class="price-note">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex:none;margin-top:1px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-        Prices shown are starting rates. Final cost is based on the area size and time required, and will always be confirmed with you <em>before</em> the service begins — no surprises.
-      </p>
-      <div class="wax-head"><span></span><b class="wax-col">Rica</b><b class="wax-col">Brazilian</b></div>
-      <ul class="price-list wax">
-        <li><span>Back Neck</span><i></i><b class="wax-col">€10</b><b class="wax-col">€15</b></li>
-        <li><span>Full Back</span><i></i><b class="wax-col">€40</b><b class="wax-col">€50</b></li>
-        <li><span>Full Face</span><i></i><b class="wax-col">€20</b><b class="wax-col">€25</b></li>
-        <li><span>Full Hands</span><i></i><b class="wax-col">€15</b><b class="wax-col">€20</b></li>
-        <li><span>Half Hands</span><i></i><b class="wax-col">€10</b><b class="wax-col">€15</b></li>
-        <li><span>Full Legs</span><i></i><b class="wax-col">€25</b><b class="wax-col">€30</b></li>
-        <li><span>Half Legs</span><i></i><b class="wax-col">€20</b><b class="wax-col">€25</b></li>
-        <li><span>Under Arms</span><i></i><b class="wax-col">€10</b><b class="wax-col">€15</b></li>
+      <h3>Waxing <small>Rica or Brazilian</small></h3>
+      <ul class="price-list">
+        <li><span>Back Neck</span></li>
+        <li><span>Full Back</span></li>
+        <li><span>Full Face</span></li>
+        <li><span>Full Hands</span></li>
+        <li><span>Half Hands</span></li>
+        <li><span>Full Legs</span></li>
+        <li><span>Half Legs</span></li>
+        <li><span>Under Arms</span></li>
       </ul>
       <p class="price-note">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex:none;margin-top:1px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-        Prices shown are starting rates. Final cost is based on the area size and time required, and will always be confirmed with you <em>before</em> the service begins — no surprises.
+        Every area is available in Rica or Brazilian wax. Final details are confirmed with you <em>before</em> we begin.
       </p>
     </div>
 
     <div class="price-block reveal wide">
       <h3>Regular Facials</h3>
       <ul class="price-list">
-        <li><span>Basic Cleanup</span><i></i><b>€18</b></li>
-        <li><span>Fruit Cleanup</span><i></i><b>€20</b></li>
-        <li><span>Fruit</span><i></i><b>€27</b></li>
-        <li><span>Papaya Facial</span><i></i><b>€30</b></li>
-        <li><span>Silver</span><i></i><b>€30</b></li>
-        <li><span>Gold</span><i></i><b>€30</b></li>
-        <li><span>Diamond</span><i></i><b>€35</b></li>
-        <li><span>Pearl</span><i></i><b>€38</b></li>
-        <li><span>Red Wine</span><i></i><b>€32</b></li>
-        <li><span>O3+ Seaweed</span><i></i><b>€35</b></li>
-        <li><span>O3+ Brightening</span><i></i><b>€40</b></li>
-        <li><span>Anti Acne</span><i></i><b>€33</b></li>
-        <li><span>Detan Raga</span><i></i><b>€15</b></li>
-        <li><span>Detan Naturals</span><i></i><b>€18</b></li>
-        <li><span>Detan O3</span><i></i><b>€20</b></li>
-        <li><span>Gold Cream Bleach</span><i></i><b>€15</b></li>
-        <li><span>Party Glow</span><i></i><b>€38</b></li>
+        <li><span>Basic Cleanup</span></li>
+        <li><span>Fruit Cleanup</span></li>
+        <li><span>Fruit</span></li>
+        <li><span>Papaya Facial</span></li>
+        <li><span>Silver</span></li>
+        <li><span>Gold</span></li>
+        <li><span>Diamond</span></li>
+        <li><span>Pearl</span></li>
+        <li><span>Red Wine</span></li>
+        <li><span>O3+ Seaweed</span></li>
+        <li><span>O3+ Brightening</span></li>
+        <li><span>Anti Acne</span></li>
+        <li><span>Detan Raga</span></li>
+        <li><span>Detan Naturals</span></li>
+        <li><span>Detan O3</span></li>
+        <li><span>Gold Cream Bleach</span></li>
+        <li><span>Party Glow</span></li>
       </ul>
     </div>
 
     <div class="price-block reveal">
       <h3>Signature Hydra Facial</h3>
       <ul class="price-list">
-        <li><span>40 Mins</span><i></i><b>€55</b></li>
-        <li><span>60 Mins</span><i></i><b>€76</b></li>
-        <li><span>90 Mins</span><i></i><b>€100</b></li>
-        <li><span>LED Light Add-on</span><i></i><b>€10</b></li>
+        <li><span>40 Mins</span></li>
+        <li><span>60 Mins</span></li>
+        <li><span>90 Mins</span></li>
+        <li><span>LED Light Add-on</span></li>
       </ul>
     </div>
 
     <div class="price-block reveal">
       <h3>Hair</h3>
       <ul class="price-list">
-        <li><span>Straight Cut</span><i></i><b>€7</b></li>
-        <li><span>Trimming</span><i></i><b>€10</b></li>
-        <li><span>V Shape</span><i></i><b>€12</b></li>
-        <li><span>U Shape</span><i></i><b>€12</b></li>
-        <li><span>Layered Cut</span><i></i><b>€22</b></li>
-        <li><span>Adv. Layers Cut</span><i></i><b>€27</b></li>
-        <li><span>Feather Cut</span><i></i><b>€25</b></li>
-        <li><span>Fringes</span><i></i><b>€7</b></li>
-        <li><span>Bob A-Line Cut</span><i></i><b>€30</b></li>
-        <li><span>Normal Hair Wash</span><i></i><b class="price-on-request">Depends on hair volume &amp; length</b></li>
-        <li><span>Hair Spa</span><i></i><b class="price-on-request">Depends on hair volume &amp; length</b><span class="service-note">*Includes: head massage, steam, wash</span></li>
+        <li><span>Straight Cut</span></li>
+        <li><span>Trimming</span></li>
+        <li><span>V Shape</span></li>
+        <li><span>U Shape</span></li>
+        <li><span>Layered Cut</span></li>
+        <li><span>Adv. Layers Cut</span></li>
+        <li><span>Feather Cut</span></li>
+        <li><span>Fringes</span></li>
+        <li><span>Bob A-Line Cut</span></li>
+        <li><span>Normal Hair Wash</span></li>
+        <li><span>Hair Spa</span><span class="service-note">*Includes: head massage, steam, wash</span></li>
       </ul>
     </div>
 
     <div class="price-block reveal">
       <h3>Massages</h3>
       <ul class="price-list">
-        <li><span>Head (30 mins)</span><i></i><b>€30</b></li>
-        <li><span>Neck & Hands (30 mins)</span><i></i><b>€30</b></li>
-        <li><span>Back Massage (40 mins)</span><i></i><b>€40</b></li>
-        <li><span>Leg (30 mins)</span><i></i><b>€40</b></li>
-        <li><span>Full Body (60 mins)</span><i></i><b>€65</b></li>
+        <li><span>Head (30 mins)</span></li>
+        <li><span>Neck &amp; Hands (30 mins)</span></li>
+        <li><span>Back Massage (40 mins)</span></li>
+        <li><span>Leg (30 mins)</span></li>
+        <li><span>Full Body (60 mins)</span></li>
       </ul>
     </div>
 
@@ -471,7 +467,7 @@
     <details class="reveal"><summary>How do I book an appointment?</summary><p>Use the "Book Now" button — pick your services, a date and a time. Your request is sent directly to us on WhatsApp and we'll confirm promptly.</p></details>
     <details class="reveal"><summary>Can I modify or cancel my appointment?</summary><p>Yes. Modification or cancellation is possible up to 24 hours before your scheduled appointment.</p></details>
     <details class="reveal"><summary>Is facial product tested before applying?</summary><p>Yes, absolutely. Even if the same product was used in a previous session, we recommend and enforce a patch test behind the ear and wait 10 minutes before proceeding.</p></details>
-    
+
   </div>
 </section>
 
@@ -480,7 +476,7 @@
   <a href="#top" class="footer-brand">Glow&nbsp;Bliss <em>Beauty Parlour</em></a>
   <nav class="footer-nav">
     <a href="#services">Services</a>
-    <a href="#prices">Prices</a>
+    <a href="#menu">Menu</a>
     <a href="#contact">Contact</a>
     <a href="book.html">Book</a>
   </nav>
@@ -500,73 +496,6 @@
   <svg viewBox="0 0 32 32" width="26" height="26" fill="currentColor"><path d="M16 .4C7.4.4.5 7.3.5 15.9c0 2.8.7 5.5 2.1 7.9L.4 31.6l8-2.1c2.3 1.2 4.9 1.9 7.6 1.9 8.6 0 15.5-6.9 15.5-15.5S24.6.4 16 .4zm7.1 18.7c-.4-.2-2.3-1.1-2.6-1.3s-.6-.2-.9.2-1 1.3-1.2 1.5-.4.3-.8.1c-2.3-1.2-3.9-2.6-5.4-4.9-.4-.7.4-.6 1.1-2.1.1-.3.1-.5 0-.7s-.9-2.1-1.2-2.9c-.3-.8-.6-.7-.9-.7h-.8c-.3 0-.7.1-1.1.5s-1.4 1.4-1.4 3.4 1.5 3.9 1.7 4.2c.2.3 2.9 4.5 7.1 6.3 2.6 1.1 3.7 1.2 5 1 .8-.1 2.3-.9 2.6-1.9.3-.9.3-1.7.2-1.9-.1-.1-.3-.2-.7-.4z"/></svg>
 </a>
 
-<script src="load-prices.js"></script>
 <script src="script.js"></script>
-
-<!-- Update prices from rate_card.json -->
-<script>
-    // Wait for RATE_CARD to load from rate_card.json
-    document.addEventListener('rateCardLoaded', function() {
-        console.log('✅ Updating prices from RATE_CARD');
-        updatePricesFromRateCard();
-    });
-    
-    // Fallback: Update when page fully loads
-    window.addEventListener('load', function() {
-        setTimeout(function() {
-            if (RATE_CARD && Object.keys(RATE_CARD).length > 0) {
-                updatePricesFromRateCard();
-            }
-        }, 500);
-    });
-
-    function updatePricesFromRateCard() {
-        if (!RATE_CARD || Object.keys(RATE_CARD).length === 0) {
-            console.warn('RATE_CARD not loaded');
-            return;
-        }
-
-        console.log('Processing price list items...');
-
-        // Only update single-price rows — skip waxing (class="price-list wax")
-        // because waxing has two separate columns (Rica + Brazilian) already
-        // hardcoded correctly in the HTML; the JS updater would overwrite both
-        // columns with whichever category it finds first (Rica), making them identical.
-        const priceLists = document.querySelectorAll('.price-list:not(.wax) li');
-        let updated = 0;
-        
-        priceLists.forEach(item => {
-            const spans = item.querySelectorAll('span');
-            if (spans.length === 0) return;
-            
-            const serviceName = spans[0].textContent.trim();
-            const priceElements = item.querySelectorAll('b');
-            if (priceElements.length === 0) return;
-
-            // Skip price-on-request items — their <b> shows custom text, not a price
-            if (priceElements[0].classList.contains('price-on-request')) return;
-
-            // Search through all categories in RATE_CARD
-            let found = false;
-            for (const [categoryName, categoryData] of Object.entries(RATE_CARD)) {
-                const services = categoryData.services;
-                
-                for (const [svcName, price] of Object.entries(services)) {
-                    if (svcName === serviceName) {
-                        // Single price element — safe to update
-                        priceElements[0].textContent = '€' + price.toFixed(2);
-                        console.log(`✅ Updated: ${svcName} = €${price}`);
-                        updated++;
-                        found = true;
-                        break;
-                    }
-                }
-                if (found) break;
-            }
-        });
-        
-        console.log(`Updated ${updated} prices`);
-    }
-</script>
 </body>
 </html>

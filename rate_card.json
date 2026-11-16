@@ -1,121 +1,248 @@
 {
   "threading": {
     "name": "Threading",
-    "taxRate": 9,
     "services": {
-      "eyebrows": { "name": "Eye Brows", "price": 5 },
-      "upper_lip_chin": { "name": "Upper Lip+Chin", "price": 5 },
-      "forehead": { "name": "Forehead", "price": 3 },
-      "neck": { "name": "Neck", "price": 5 },
-      "side_locks": { "name": "Side Locks", "price": 5 },
-      "full_face": { "name": "Full Face", "price": 12 }
+      "eyebrows": {
+        "name": "Eye Brows"
+      },
+      "upper_lip_chin": {
+        "name": "Upper Lip+Chin"
+      },
+      "forehead": {
+        "name": "Forehead"
+      },
+      "neck": {
+        "name": "Neck"
+      },
+      "side_locks": {
+        "name": "Side Locks"
+      },
+      "full_face": {
+        "name": "Full Face"
+      }
     }
   },
   "hair": {
     "name": "Hair",
-    "taxRate": 9,
     "services": {
-      "straight_cut": { "name": "Straight Cut", "price": 7 },
-      "trimming": { "name": "Trimming", "price": 10 },
-      "v_shape": { "name": "V Shape", "price": 12 },
-      "u_shape": { "name": "U Shape", "price": 12 },
-      "layered_cut": { "name": "Layered Cut", "price": 22 },
-      "adv_layers_cut": { "name": "Adv. Layers Cut", "price": 27 },
-      "feather_cut": { "name": "Feather Cut", "price": 25 },
-      "fringes": { "name": "Fringes", "price": 7 },
-      "bob_aline_cut": { "name": "Bob A-Line Cut", "price": 30 },
-      "normal_hair_wash": { "name": "Normal Hair Wash", "price": 15, "note": "Depends on hair volume & length" },
-      "hair_spa": { "name": "Hair Spa", "price": 25, "note": "Depends on hair volume & length. Includes: head massage, steam, wash" }
+      "straight_cut": {
+        "name": "Straight Cut"
+      },
+      "trimming": {
+        "name": "Trimming"
+      },
+      "v_shape": {
+        "name": "V Shape"
+      },
+      "u_shape": {
+        "name": "U Shape"
+      },
+      "layered_cut": {
+        "name": "Layered Cut"
+      },
+      "adv_layers_cut": {
+        "name": "Adv. Layers Cut"
+      },
+      "feather_cut": {
+        "name": "Feather Cut"
+      },
+      "fringes": {
+        "name": "Fringes"
+      },
+      "bob_aline_cut": {
+        "name": "Bob A-Line Cut"
+      },
+      "normal_hair_wash": {
+        "name": "Normal Hair Wash"
+      },
+      "hair_spa": {
+        "name": "Hair Spa",
+        "note": "Includes: head massage, steam, wash"
+      }
     }
   },
   "waxing_rica": {
     "name": "Waxing Rica",
-    "taxRate": 21,
     "services": {
-      "back_neck": { "name": "Back Neck", "price": 10 },
-      "full_back": { "name": "Full Back", "price": 40 },
-      "full_face": { "name": "Full Face", "price": 20 },
-      "full_hands": { "name": "Full Hands", "price": 15 },
-      "half_hands": { "name": "Half Hands", "price": 10 },
-      "full_legs": { "name": "Full Legs", "price": 25 },
-      "half_legs": { "name": "Half Legs", "price": 20 },
-      "under_arms": { "name": "Under Arms", "price": 10 }
+      "back_neck": {
+        "name": "Back Neck"
+      },
+      "full_back": {
+        "name": "Full Back"
+      },
+      "full_face": {
+        "name": "Full Face"
+      },
+      "full_hands": {
+        "name": "Full Hands"
+      },
+      "half_hands": {
+        "name": "Half Hands"
+      },
+      "full_legs": {
+        "name": "Full Legs"
+      },
+      "half_legs": {
+        "name": "Half Legs"
+      },
+      "under_arms": {
+        "name": "Under Arms"
+      }
     }
   },
   "waxing_brazilian": {
     "name": "Waxing Brazilian",
-    "taxRate": 21,
     "services": {
-      "back_neck": { "name": "Back Neck", "price": 15 },
-      "full_back": { "name": "Full Back", "price": 50 },
-      "full_face": { "name": "Full Face", "price": 25 },
-      "full_hands": { "name": "Full Hands", "price": 20 },
-      "half_hands": { "name": "Half Hands", "price": 15 },
-      "full_legs": { "name": "Full Legs", "price": 30 },
-      "half_legs": { "name": "Half Legs", "price": 25 },
-      "under_arms": { "name": "Under Arms", "price": 15 }
+      "back_neck": {
+        "name": "Back Neck"
+      },
+      "full_back": {
+        "name": "Full Back"
+      },
+      "full_face": {
+        "name": "Full Face"
+      },
+      "full_hands": {
+        "name": "Full Hands"
+      },
+      "half_hands": {
+        "name": "Half Hands"
+      },
+      "full_legs": {
+        "name": "Full Legs"
+      },
+      "half_legs": {
+        "name": "Half Legs"
+      },
+      "under_arms": {
+        "name": "Under Arms"
+      }
     }
   },
   "pedicure": {
     "name": "Pedicure",
-    "taxRate": 21,
     "services": {
-      "legs": { "name": "Legs", "price": 30 },
-      "french": { "name": "French", "price": 35 },
-      "ozone": { "name": "Ozone", "price": 45, "note": "*Includes Nail Polish" }
+      "legs": {
+        "name": "Legs"
+      },
+      "french": {
+        "name": "French"
+      },
+      "ozone": {
+        "name": "Ozone",
+        "note": "*Includes Nail Polish"
+      }
     }
   },
   "manicure": {
     "name": "Manicure",
-    "taxRate": 21,
     "services": {
-      "hands": { "name": "Hands", "price": 25 },
-      "french": { "name": "French", "price": 30 },
-      "ozone": { "name": "Ozone", "price": 35, "note": "*Includes Nail Polish" }
+      "hands": {
+        "name": "Hands"
+      },
+      "french": {
+        "name": "French"
+      },
+      "ozone": {
+        "name": "Ozone",
+        "note": "*Includes Nail Polish"
+      }
     }
   },
   "facials": {
     "name": "Regular Facials",
-    "taxRate": 21,
     "services": {
-      "basic_cleanup": { "name": "Basic Cleanup", "price": 18 },
-      "fruit_cleanup": { "name": "Fruit Cleanup", "price": 20 },
-      "papaya_facial": { "name": "Papaya Facial", "price": 30 },
-      "silver": { "name": "Silver", "price": 30 },
-      "gold": { "name": "Gold", "price": 30 },
-      "diamond": { "name": "Diamond", "price": 35 },
-      "pearl": { "name": "Pearl", "price": 38 },
-      "red_wine": { "name": "Red Wine", "price": 32 },
-      "fruit": { "name": "Fruit", "price": 27 },
-      "o3_seaweed": { "name": "O3+ Seaweed", "price": 35 },
-      "o3_brightening": { "name": "O3+ Brightening", "price": 40 },
-      "detan_raga": { "name": "Detan Raga", "price": 15 },
-      "detan_naturals": { "name": "Detan Naturals", "price": 18 },
-      "detan_o3": { "name": "Detan O3", "price": 20 },
-      "gold_cream_bleach": { "name": "Gold Cream Bleach", "price": 15 },
-      "party_glow": { "name": "Party Glow", "price": 38 },
-      "anti_acne": { "name": "Anti Acne", "price": 33 }
+      "basic_cleanup": {
+        "name": "Basic Cleanup"
+      },
+      "fruit_cleanup": {
+        "name": "Fruit Cleanup"
+      },
+      "papaya_facial": {
+        "name": "Papaya Facial"
+      },
+      "silver": {
+        "name": "Silver"
+      },
+      "gold": {
+        "name": "Gold"
+      },
+      "diamond": {
+        "name": "Diamond"
+      },
+      "pearl": {
+        "name": "Pearl"
+      },
+      "red_wine": {
+        "name": "Red Wine"
+      },
+      "fruit": {
+        "name": "Fruit"
+      },
+      "o3_seaweed": {
+        "name": "O3+ Seaweed"
+      },
+      "o3_brightening": {
+        "name": "O3+ Brightening"
+      },
+      "detan_raga": {
+        "name": "Detan Raga"
+      },
+      "detan_naturals": {
+        "name": "Detan Naturals"
+      },
+      "detan_o3": {
+        "name": "Detan O3"
+      },
+      "gold_cream_bleach": {
+        "name": "Gold Cream Bleach"
+      },
+      "party_glow": {
+        "name": "Party Glow"
+      },
+      "anti_acne": {
+        "name": "Anti Acne"
+      }
     }
   },
   "hydra_facial": {
     "name": "Signature Hydra Facial",
-    "taxRate": 21,
     "services": {
-      "40_mins": { "name": "40 Mins", "price": 55, "note": "Only specific tools suitable for face, Steam, Tan Pack" },
-      "60_mins": { "name": "60 Mins", "price": 76, "note": "Includes ALL tools, Steam, Tan Pack, Double Cleansing" },
-      "90_mins": { "name": "90 Mins", "price": 100, "note": "Includes ALL tools, Steam, Tan Pack, Double Cleansing, Collusion Mask" },
-      "led_light": { "name": "LED Light Add-on", "price": 10 }
+      "40_mins": {
+        "name": "40 Mins",
+        "note": "Only specific tools suitable for face, Steam, Tan Pack"
+      },
+      "60_mins": {
+        "name": "60 Mins",
+        "note": "Includes ALL tools, Steam, Tan Pack, Double Cleansing"
+      },
+      "90_mins": {
+        "name": "90 Mins",
+        "note": "Includes ALL tools, Steam, Tan Pack, Double Cleansing, Collusion Mask"
+      },
+      "led_light": {
+        "name": "LED Light Add-on"
+      }
     }
   },
   "massages": {
     "name": "Massages",
-    "taxRate": 21,
     "services": {
-      "head": { "name": "Head (30 mins)", "price": 30 },
-      "neck_hands": { "name": "Neck & Hands (30 mins)", "price": 30 },
-      "back": { "name": "Back Massage (40 mins)", "price": 40 },
-      "leg": { "name": "Leg (30 mins)", "price": 40 },
-      "full_body": { "name": "Full Body (60 mins)", "price": 65 }
+      "head": {
+        "name": "Head (30 mins)"
+      },
+      "neck_hands": {
+        "name": "Neck & Hands (30 mins)"
+      },
+      "back": {
+        "name": "Back Massage (40 mins)"
+      },
+      "leg": {
+        "name": "Leg (30 mins)"
+      },
+      "full_body": {
+        "name": "Full Body (60 mins)"
+      }
     }
   }
 }
