@@ -1,6 +1,5 @@
 /* ===== Glow Bliss — booking.js ===== */
 const WHATSAPP_NUMBER = "31633343093";
-const FORMSPREE_URL   = "https://formspree.io/f/xnjryarb"; // Active Formspree form
 
 // ─── App state ────────────────────────────────────────────────────────────────
 // Each selected service is { name, category }. Names repeat across categories
@@ -160,127 +159,40 @@ function toggleErr(id, show) {
   document.getElementById(id).classList.toggle("show", show);
 }
 
+// ─── Build the booking message (shared by WhatsApp and SMS) ───────────────────
+// bold = true adds WhatsApp *bold* formatting; SMS gets plain text.
+function buildMessage(bold) {
+  const b = t => bold ? `*${t}*` : t;
+  const name = document.getElementById("custName").value.trim();
+  const note = document.getElementById("custNote").value.trim();
+
+  let msg = `${b("New Appointment Request — Glow Bliss")}\n\n`;
+  if (name) msg += `${b("Name:")} ${name}\n`;
+  msg += `${b("Date:")} ${state.date}\n${b("Time:")} ${state.time}\n\n${b("Services:")}\n`;
+  state.services.forEach(s => { msg += `• ${s.category} — ${s.name}\n`; });
+  if (note) msg += `\n${b("Note:")} ${note}\n`;
+  msg += `\nPlease confirm my appointment. Thank you!`;
+  return msg;
+}
+
 // ─── WhatsApp submit ──────────────────────────────────────────────────────────
 document.getElementById("submitWa").addEventListener("click", () => {
   if (!validateBooking()) return;
-  const name  = document.getElementById("custName").value.trim();
-  const note  = document.getElementById("custNote").value.trim();
-
-  let msg = "*New Appointment Request — Glow Bliss*\n\n";
-  if (name) msg += `*Name:* ${name}\n`;
-  msg += `*Date:* ${state.date}\n*Time:* ${state.time}\n\n*Services:*\n`;
-  state.services.forEach(s => { msg += `• ${s.category} — ${s.name}\n`; });
-  if (note) msg += `\n*Note:* ${note}\n`;
-  msg += `\nPlease confirm my appointment. Thank you!`;
-
+  const msg = buildMessage(true);
   window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, "_blank");
 });
 
-// ─── Email button — show contact panel ───────────────────────────────────────
-const emailPanel  = document.getElementById("emailPanel");
-const submitEmail = document.getElementById("submitEmail");
-let emailPanelOpen = false;
+// ─── SMS submit: opens the phone's own messaging app ─────────────────────────
+// iPhone/iPad expect "&body=", Android and others expect "?body=".
+function isAppleMobile() {
+  const ua = navigator.userAgent || "";
+  return /iPhone|iPad|iPod/.test(ua) ||
+         (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1); // iPadOS reports as Mac
+}
 
-submitEmail.addEventListener("click", () => {
+document.getElementById("submitSms").addEventListener("click", () => {
   if (!validateBooking()) return;
-
-  if (!emailPanelOpen) {
-    // First click: reveal contact panel and ask for details
-    emailPanel.style.display = "block";
-    emailPanel.scrollIntoView({ behavior: "smooth", block: "start" });
-    submitEmail.innerHTML = `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg> Confirm &amp; Send Email`;
-    emailPanelOpen = true;
-    return;
-  }
-
-  // Second click: validate contact fields and submit
-  const email = document.getElementById("custEmail").value.trim();
-  const phone = document.getElementById("custPhone").value.trim();
-
-  if (!email && !phone) {
-    toggleErr("errContact", true);
-    document.getElementById("errContact").scrollIntoView({ behavior: "smooth", block: "center" });
-    return;
-  }
-  toggleErr("errContact", false);
-
-  submitToFormspree(email, phone);
+  const msg = buildMessage(false);
+  const sep = isAppleMobile() ? "&" : "?";
+  window.location.href = `sms:+${WHATSAPP_NUMBER}${sep}body=${encodeURIComponent(msg)}`;
 });
-
-// ─── Formspree submission ─────────────────────────────────────────────────────
-async function submitToFormspree(email, phone) {
-  const name  = document.getElementById("custName").value.trim();
-  const note  = document.getElementById("custNote").value.trim();
-  const servicesList = state.services.map(s => `${s.category} — ${s.name}`).join("\n");
-
-  // Fill hidden form fields
-  document.getElementById("fs_name").value     = name || "Not provided";
-  document.getElementById("fs_email").value    = email || "Not provided";
-  document.getElementById("fs_phone").value    = phone || "Not provided";
-  document.getElementById("fs_replyto").value  = email || "";
-  document.getElementById("fs_date").value     = state.date;
-  document.getElementById("fs_time").value     = state.time;
-  document.getElementById("fs_services").value = servicesList;
-  document.getElementById("fs_note").value     = note || "None";
-
-  // Disable button while submitting
-  submitEmail.disabled = true;
-  submitEmail.textContent = "Sending…";
-
-  try {
-    const formData = new FormData(document.getElementById("formspreeForm"));
-    const resp = await fetch(FORMSPREE_URL, {
-      method: "POST",
-      body: formData,
-      headers: { Accept: "application/json" },
-    });
-
-    if (resp.ok) {
-      showSuccess(email, phone);
-    } else {
-      const data = await resp.json().catch(() => ({}));
-      const msg = data?.errors?.map(e => e.message).join(", ") || "Unknown error";
-      throw new Error(msg);
-    }
-  } catch (err) {
-    submitEmail.disabled = false;
-    submitEmail.innerHTML = `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg> Retry — Send Email`;
-    // Show inline error
-    const existing = document.getElementById("sendError");
-    if (existing) existing.remove();
-    const errEl = document.createElement("p");
-    errEl.id = "sendError";
-    errEl.className = "err show";
-    errEl.style.marginTop = "1rem";
-    errEl.textContent = `Could not send: ${err.message}. Please try WhatsApp instead.`;
-    document.getElementById("summaryBar").after(errEl);
-  }
-}
-
-// ─── Success state ────────────────────────────────────────────────────────────
-function showSuccess(email, phone) {
-  // Hide everything except success message
-  document.getElementById("summaryBar").style.display = "none";
-  emailPanel.style.display = "none";
-
-  const msg = document.getElementById("successMsg");
-  const det = document.getElementById("successDetails");
-
-  det.innerHTML = `
-    <div class="success-details">
-      <div class="sd-row"><span>Date</span><b>${state.date}</b></div>
-      <div class="sd-row"><span>Time</span><b>${state.time}</b></div>
-      <div class="sd-row"><span>Services</span><b>${state.services.length} selected</b></div>
-      ${email ? `<div class="sd-row"><span>We'll reply to</span><b></b></div>` : ""}
-      ${phone ? `<div class="sd-row"><span>Or call/WhatsApp</span><b></b></div>` : ""}
-    </div>`;
-
-  // Insert customer-typed values as text, not HTML
-  const rows = det.querySelectorAll(".sd-row b");
-  let i = 3;
-  if (email) rows[i++].textContent = email;
-  if (phone) rows[i++].textContent = phone;
-
-  msg.style.display = "block";
-  msg.scrollIntoView({ behavior: "smooth", block: "start" });
-}
