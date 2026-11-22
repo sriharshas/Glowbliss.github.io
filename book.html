@@ -4,17 +4,10 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Book an Appointment — Glow Bliss Beauty Parlour</title>
-<meta name="description" content="Book your beauty appointment at Glow Bliss Almere. Select services (Threading, Facials, Waxing, Hair), pick a date and time slot, send via WhatsApp or email."/>
+<meta name="description" content="Book your beauty appointment at Glow Bliss Almere. Select services (Threading, Facials, Waxing, Hair), pick a date and time slot, send via WhatsApp or SMS."/>
 <meta name="robots" content="index, follow"/>
 
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-P7H3CM96P1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-P7H3CM96P1');
-</script>
+<!-- Google Analytics loads only after cookie consent: see consent.js -->
 
 <!-- Open Graph Meta Tags -->
 <meta property="og:title" content="Book an Appointment — Glow Bliss Beauty Parlour"/>
@@ -74,7 +67,7 @@
   <div class="book-head">
     <p class="eyebrow center">Appointment</p>
     <h1>Book Your <em>Slot</em></h1>
-    <p>Select services, choose a date &amp; time, then send your request via WhatsApp or email.</p>
+    <p>Select services, choose a date &amp; time, then send your request via WhatsApp or SMS.</p>
   </div>
 
   <!-- STEP 1: SERVICES -->
@@ -89,7 +82,7 @@
   <div class="booking-disclaimer">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
     <div>
-      <strong>Please note:</strong> Your appointment request is <strong>tentative</strong> until we confirm it. The date and time slots shown are not guaranteed — confirmation via WhatsApp or email is required to secure your booking.
+      <strong>Please note:</strong> Your appointment request is <strong>tentative</strong> until we confirm it. The date and time slots shown are not guaranteed — confirmation via WhatsApp or SMS is required to secure your booking.
     </div>
   </div>
 
@@ -124,31 +117,6 @@
     </div>
   </section>
 
-  <!-- EMAIL CONTACT PANEL — slides in when customer picks email -->
-  <section class="book-step email-panel" id="emailPanel" style="display:none">
-    <div class="step-label"><span class="step-num">5</span><h2>How to reach you</h2></div>
-    <p class="email-panel-intro">So we can confirm your appointment, please leave at least one way to contact you back.</p>
-    <div class="contact-fields">
-      <div class="field">
-        <label for="custEmail">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>
-          Email address
-        </label>
-        <input type="email" id="custEmail" placeholder="you@example.com" autocomplete="email"/>
-      </div>
-      <div class="contact-or">or</div>
-      <div class="field">
-        <label for="custPhone">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
-          Phone / WhatsApp number
-        </label>
-        <input type="tel" id="custPhone" placeholder="+31 6 ..." autocomplete="tel"/>
-      </div>
-    </div>
-    <p class="err" id="errContact">Please provide at least an email address or phone number so we can confirm your booking.</p>
-    <p class="hint">Your details are only used to confirm this appointment and will not be shared.</p>
-  </section>
-
   <!-- SUMMARY BAR -->
   <div class="summary-bar" id="summaryBar">
     <div class="sum-info">
@@ -161,43 +129,29 @@
         <svg viewBox="0 0 32 32" width="18" height="18" fill="currentColor"><path d="M16 .4C7.4.4.5 7.3.5 15.9c0 2.8.7 5.5 2.1 7.9L.4 31.6l8-2.1c2.3 1.2 4.9 1.9 7.6 1.9 8.6 0 15.5-6.9 15.5-15.5S24.6.4 16 .4zm7.1 18.7c-.4-.2-2.3-1.1-2.6-1.3s-.6-.2-.9.2-1 1.3-1.2 1.5-.4.3-.8.1c-2.3-1.2-3.9-2.6-5.4-4.9-.4-.7.4-.6 1.1-2.1.1-.3.1-.5 0-.7s-.9-2.1-1.2-2.9c-.3-.8-.6-.7-.9-.7h-.8c-.3 0-.7.1-1.1.5s-1.4 1.4-1.4 3.4 1.5 3.9 1.7 4.2c.2.3 2.9 4.5 7.1 6.3 2.6 1.1 3.7 1.2 5 1 .8-.1 2.3-.9 2.6-1.9.3-.9.3-1.7.2-1.9-.1-.1-.3-.2-.7-.4z"/></svg>
         Send via WhatsApp
       </button>
-      <!-- Secondary: Email fallback -->
-      <button class="btn-submit btn-email" id="submitEmail" title="Send booking request via email">
-        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>
-        Send via Email
+      <!-- Secondary: SMS (opens the phone's own messaging app) -->
+      <button class="btn-submit btn-email" id="submitSms" title="Send booking request by text message (SMS)">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        Send via SMS
       </button>
     </div>
   </div>
-
-  <!-- SUCCESS MESSAGE (shown after email submit) -->
-  <div class="success-msg" id="successMsg" style="display:none">
-    <div class="success-inner">
-      <div class="success-icon">✓</div>
-      <h2>Booking request sent!</h2>
-      <p>We'll get back to you shortly to confirm your appointment.</p>
-      <div id="successDetails"></div>
-      <a href="index.html" class="btn-book btn-lg" style="margin-top:1.6rem">Back to home</a>
-    </div>
-  </div>
+  <p class="hint privacy-notice" style="text-align:center;margin-top:1rem">Both buttons open the app on your phone with your request ready to send. We use your details only to confirm and manage your appointment. Read our <a href="privacy.html" style="text-decoration:underline">privacy statement</a>.</p>
 
 </main>
 
-<!-- Hidden Formspree form (submitted via JS fetch, no page redirect) -->
-<form id="formspreeForm" action="https://formspree.io/f/mounicaraj1497" method="POST" style="display:none">
-  <input type="hidden" name="_subject" value="New Appointment Request — Glow Bliss"/>
-  <input type="hidden" name="_replyto" id="fs_replyto"/>
-  <input type="hidden" name="name" id="fs_name"/>
-  <input type="hidden" name="email" id="fs_email"/>
-  <input type="hidden" name="phone" id="fs_phone"/>
-  <input type="hidden" name="date" id="fs_date"/>
-  <input type="hidden" name="time" id="fs_time"/>
-  <input type="hidden" name="services" id="fs_services"/>
-  <input type="hidden" name="note" id="fs_note"/>
-  <input type="hidden" name="_next" value=""/>
-  <input type="text" name="_gotcha" style="display:none"/>
-</form>
+<footer class="footer">
+  <a href="index.html" class="footer-brand">Glow&nbsp;Bliss <em>Beauty Parlour</em></a>
+  <nav class="footer-nav">
+    <a href="index.html">Home</a>
+    <a href="privacy.html">Privacy</a>
+    <a href="#" data-cookie-settings>Cookie settings</a>
+  </nav>
+  <p class="footer-copy">© <span id="year"></span> Glow Bliss Beauty Parlour · Almere Buiten, Netherlands</p>
+</footer>
 
 <script src="script.js"></script>
 <script src="booking.js"></script>
+<script src="consent.js"></script>
 </body>
 </html>
