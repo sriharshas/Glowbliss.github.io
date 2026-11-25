@@ -1,59 +1,78 @@
 {
   "threading": {
     "name": "Threading",
+    "name_nl": "Threading",
+    "from": 3,
     "services": {
       "eyebrows": {
-        "name": "Eye Brows"
+        "name": "Eye Brows",
+        "name_nl": "Wenkbrauwen"
       },
       "upper_lip_chin": {
-        "name": "Upper Lip+Chin"
+        "name": "Upper Lip+Chin",
+        "name_nl": "Bovenlip + kin"
       },
       "forehead": {
-        "name": "Forehead"
+        "name": "Forehead",
+        "name_nl": "Voorhoofd"
       },
       "neck": {
-        "name": "Neck"
+        "name": "Neck",
+        "name_nl": "Hals"
       },
       "side_locks": {
-        "name": "Side Locks"
+        "name": "Side Locks",
+        "name_nl": "Bakkebaarden"
       },
       "full_face": {
-        "name": "Full Face"
+        "name": "Full Face",
+        "name_nl": "Hele gezicht"
       }
     }
   },
   "hair": {
     "name": "Hair",
+    "name_nl": "Haar",
+    "from": 7,
     "services": {
       "straight_cut": {
-        "name": "Straight Cut"
+        "name": "Straight Cut",
+        "name_nl": "Recht knippen"
       },
       "trimming": {
-        "name": "Trimming"
+        "name": "Trimming",
+        "name_nl": "Punten knippen"
       },
       "v_shape": {
-        "name": "V Shape"
+        "name": "V Shape",
+        "name_nl": "V-vorm"
       },
       "u_shape": {
-        "name": "U Shape"
+        "name": "U Shape",
+        "name_nl": "U-vorm"
       },
       "layered_cut": {
-        "name": "Layered Cut"
+        "name": "Layered Cut",
+        "name_nl": "Laagjes knippen"
       },
       "adv_layers_cut": {
-        "name": "Adv. Layers Cut"
+        "name": "Adv. Layers Cut",
+        "name_nl": "Uitgebreide laagjes"
       },
       "feather_cut": {
         "name": "Feather Cut"
       },
       "fringes": {
-        "name": "Fringes"
+        "name": "Fringes",
+        "name_nl": "Pony knippen"
       },
       "bob_aline_cut": {
-        "name": "Bob A-Line Cut"
+        "name": "Bob A-Line Cut",
+        "name_nl": "Bob / A-lijn"
       },
       "normal_hair_wash": {
-        "name": "Normal Hair Wash"
+        "name": "Normal Hair Wash",
+        "name_nl": "Haren wassen"
       },
       "hair_spa": {
         "name": "Hair Spa",
@@ -63,64 +82,86 @@
   },
   "waxing_rica": {
     "name": "Waxing Rica",
+    "name_nl": "Harsen – Rica",
+    "from": 10,
     "services": {
       "back_neck": {
-        "name": "Back Neck"
+        "name": "Back Neck",
+        "name_nl": "Nek"
       },
       "full_back": {
-        "name": "Full Back"
+        "name": "Full Back",
+        "name_nl": "Hele rug"
       },
       "full_face": {
-        "name": "Full Face"
+        "name": "Full Face",
+        "name_nl": "Hele gezicht"
       },
       "full_hands": {
-        "name": "Full Hands"
+        "name": "Full Hands",
+        "name_nl": "Hele armen"
       },
       "half_hands": {
-        "name": "Half Hands"
+        "name": "Half Hands",
+        "name_nl": "Halve armen"
       },
       "full_legs": {
-        "name": "Full Legs"
+        "name": "Full Legs",
+        "name_nl": "Hele benen"
       },
       "half_legs": {
-        "name": "Half Legs"
+        "name": "Half Legs",
+        "name_nl": "Halve benen"
       },
       "under_arms": {
-        "name": "Under Arms"
+        "name": "Under Arms",
+        "name_nl": "Oksels"
       }
     }
   },
   "waxing_brazilian": {
     "name": "Waxing Brazilian",
+    "name_nl": "Harsen – Braziliaans",
+    "from": 15,
     "services": {
       "back_neck": {
-        "name": "Back Neck"
+        "name": "Back Neck",
+        "name_nl": "Nek"
       },
       "full_back": {
-        "name": "Full Back"
+        "name": "Full Back",
+        "name_nl": "Hele rug"
       },
       "full_face": {
-        "name": "Full Face"
+        "name": "Full Face",
+        "name_nl": "Hele gezicht"
       },
       "full_hands": {
-        "name": "Full Hands"
+        "name": "Full Hands",
+        "name_nl": "Hele armen"
       },
       "half_hands": {
-        "name": "Half Hands"
+        "name": "Half Hands",
+        "name_nl": "Halve armen"
       },
       "full_legs": {
-        "name": "Full Legs"
+        "name": "Full Legs",
+        "name_nl": "Hele benen"
       },
       "half_legs": {
-        "name": "Half Legs"
+        "name": "Half Legs",
+        "name_nl": "Halve benen"
       },
       "under_arms": {
-        "name": "Under Arms"
+        "name": "Under Arms",
+        "name_nl": "Oksels"
       }
     }
   },
   "pedicure": {
     "name": "Pedicure",
+    "name_nl": "Pedicure",
+    "from": 30,
     "services": {
       "legs": {
         "name": "Legs"
@@ -136,6 +177,8 @@
   },
   "manicure": {
     "name": "Manicure",
+    "name_nl": "Manicure",
+    "from": 25,
     "services": {
       "hands": {
         "name": "Hands"
@@ -151,6 +194,8 @@
   },
   "facials": {
     "name": "Regular Facials",
+    "name_nl": "Gezichtsbehandelingen",
+    "from": 15,
     "services": {
       "basic_cleanup": {
         "name": "Basic Cleanup"
@@ -207,41 +252,54 @@
   },
   "hydra_facial": {
     "name": "Signature Hydra Facial",
+    "name_nl": "Signature Hydra Facial",
+    "from": 55,
     "services": {
       "40_mins": {
         "name": "40 Mins",
+        "name_nl": "40 minuten",
         "note": "Only specific tools suitable for face, Steam, Tan Pack"
       },
       "60_mins": {
         "name": "60 Mins",
+        "name_nl": "60 minuten",
         "note": "Includes ALL tools, Steam, Tan Pack, Double Cleansing"
       },
       "90_mins": {
         "name": "90 Mins",
+        "name_nl": "90 minuten",
         "note": "Includes ALL tools, Steam, Tan Pack, Double Cleansing, Collusion Mask"
       },
       "led_light": {
-        "name": "LED Light Add-on"
+        "name": "LED Light Add-on",
+        "name_nl": "LED-lamp (extra)"
       }
     }
   },
   "massages": {
     "name": "Massages",
+    "name_nl": "Massages",
+    "from": 30,
     "services": {
       "head": {
-        "name": "Head (30 mins)"
+        "name": "Head (30 mins)",
+        "name_nl": "Hoofdmassage (30 min)"
       },
       "neck_hands": {
-        "name": "Neck & Hands (30 mins)"
+        "name": "Neck & Hands (30 mins)",
+        "name_nl": "Nek & handen (30 min)"
       },
       "back": {
-        "name": "Back Massage (40 mins)"
+        "name": "Back Massage (40 mins)",
+        "name_nl": "Rugmassage (40 min)"
       },
       "leg": {
-        "name": "Leg (30 mins)"
+        "name": "Leg (30 mins)",
+        "name_nl": "Benen (30 min)"
       },
       "full_body": {
-        "name": "Full Body (60 mins)"
+        "name": "Full Body (60 mins)",
+        "name_nl": "Hele lichaam (60 min)"
       }
     }
   }

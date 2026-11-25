@@ -1,21 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://glowbliss-beautyparlour.nl/</loc>
-    <lastmod>2026-11-22</lastmod>
-    <changefreq>weekly</changefreq>
+    <loc>https://www.glowbliss-beautyparlour.nl/</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.glowbliss-beautyparlour.nl/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.glowbliss-beautyparlour.nl/en/"/>
+    <lastmod>2026-11-25</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://glowbliss-beautyparlour.nl/book.html</loc>
-    <lastmod>2026-11-22</lastmod>
-    <changefreq>weekly</changefreq>
+    <loc>https://www.glowbliss-beautyparlour.nl/en/</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.glowbliss-beautyparlour.nl/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.glowbliss-beautyparlour.nl/en/"/>
+    <lastmod>2026-11-25</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.glowbliss-beautyparlour.nl/book.html</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.glowbliss-beautyparlour.nl/book.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.glowbliss-beautyparlour.nl/en/book.html"/>
+    <lastmod>2026-11-25</lastmod>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://glowbliss-beautyparlour.nl/privacy.html</loc>
-    <lastmod>2026-11-22</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
+    <loc>https://www.glowbliss-beautyparlour.nl/en/book.html</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.glowbliss-beautyparlour.nl/book.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.glowbliss-beautyparlour.nl/en/book.html"/>
+    <lastmod>2026-11-25</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.glowbliss-beautyparlour.nl/wenkbrauwen-threaden-almere.html</loc>
+    <lastmod>2026-11-25</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.glowbliss-beautyparlour.nl/harsen-almere.html</loc>
+    <lastmod>2026-11-25</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.glowbliss-beautyparlour.nl/gezichtsbehandeling-almere.html</loc>
+    <lastmod>2026-11-25</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.glowbliss-beautyparlour.nl/hydrafacial-almere.html</loc>
+    <lastmod>2026-11-25</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.glowbliss-beautyparlour.nl/manicure-pedicure-almere.html</loc>
+    <lastmod>2026-11-25</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.glowbliss-beautyparlour.nl/knippen-haarverzorging-almere.html</loc>
+    <lastmod>2026-11-25</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.glowbliss-beautyparlour.nl/massage-almere.html</loc>
+    <lastmod>2026-11-25</lastmod>
+    <priority>0.8</priority>
   </url>
 </urlset>
