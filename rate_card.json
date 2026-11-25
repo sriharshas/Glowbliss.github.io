@@ -76,7 +76,8 @@
       },
       "hair_spa": {
         "name": "Hair Spa",
-        "note": "Includes: head massage, steam, wash"
+        "note": "Includes: head massage, steam, wash",
+        "name_nl": "Hair spa (haarverzorging)"
       }
     }
   },
@@ -99,11 +100,13 @@
       },
       "full_hands": {
         "name": "Full Hands",
-        "name_nl": "Hele armen"
+        "name_nl": "Hele armen",
+        "name_en": "Full Arms"
       },
       "half_hands": {
         "name": "Half Hands",
-        "name_nl": "Halve armen"
+        "name_nl": "Halve armen",
+        "name_en": "Half Arms"
       },
       "full_legs": {
         "name": "Full Legs",
@@ -138,11 +141,13 @@
       },
       "full_hands": {
         "name": "Full Hands",
-        "name_nl": "Hele armen"
+        "name_nl": "Hele armen",
+        "name_en": "Full Arms"
       },
       "half_hands": {
         "name": "Half Hands",
-        "name_nl": "Halve armen"
+        "name_nl": "Halve armen",
+        "name_en": "Half Arms"
       },
       "full_legs": {
         "name": "Full Legs",
@@ -164,7 +169,9 @@
     "from": 30,
     "services": {
       "legs": {
-        "name": "Legs"
+        "name": "Legs",
+        "name_nl": "Basis pedicure (incl. onderbenen)",
+        "name_en": "Leg Pedicure"
       },
       "french": {
         "name": "French"
@@ -181,7 +188,9 @@
     "from": 25,
     "services": {
       "hands": {
-        "name": "Hands"
+        "name": "Hands",
+        "name_nl": "Basis manicure",
+        "name_en": "Classic Manicure"
       },
       "french": {
         "name": "French"

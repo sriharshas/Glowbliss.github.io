@@ -60,16 +60,18 @@
     "font-size:.9rem;line-height:1.5;display:flex;gap:1rem;align-items:center;flex-wrap:wrap;animation:ccUp .35s ease}" +
     ".cc-banner[hidden]{display:none}" +
     ".cc-banner p{margin:0;flex:1 1 260px;color:var(--ink-soft,#7a5858)}" +
-    ".cc-banner a{color:var(--accent,#c97b7b);text-decoration:underline}" +
+    ".cc-banner a{color:var(--accent-text,var(--accent,#a85a5a));text-decoration:underline;display:inline-block;padding:.35rem 0}" +
     ".cc-actions{display:flex;gap:.5rem;flex:0 0 auto}" +
-    ".cc-btn{cursor:pointer;border-radius:100px;padding:.6rem 1.1rem;font-family:inherit;font-size:.78rem;" +
+    ".cc-btn{cursor:pointer;border-radius:100px;padding:.6rem 1.1rem;min-height:44px;font-family:inherit;font-size:.78rem;" +
     "letter-spacing:.08em;text-transform:uppercase;font-weight:600;border:2px solid var(--accent,#c97b7b);transition:.2s;min-width:6.5rem}" +
-    ".cc-accept{background:var(--accent,#c97b7b);color:#fff}" +
-    ".cc-reject{background:transparent;color:var(--accent,#c97b7b)}" +
+    ".cc-accept{background:var(--btn-bg,var(--accent,#a85a5a));border-color:var(--btn-bg,var(--accent,#a85a5a));color:var(--btn-fg,#fff)}" +
+    ".cc-reject{background:transparent;color:var(--accent-text,var(--accent,#a85a5a));border-color:var(--btn-bg,var(--accent,#a85a5a))}" +
     ".cc-btn:focus-visible{outline:2px solid var(--ink,#000);outline-offset:2px}" +
     "@media (max-width:700px){.cc-banner{left:0;right:0;bottom:0;max-width:none;border-radius:14px 14px 0 0;" +
     "padding:.7rem .9rem calc(.7rem + env(safe-area-inset-bottom,0px));gap:.6rem;font-size:.8rem}" +
-    ".cc-banner p{flex-basis:100%}.cc-actions{flex:1 1 100%}.cc-btn{flex:1;padding:.55rem .8rem}}" +
+    ".cc-banner p{flex-basis:100%}.cc-actions{flex:1 1 100%}.cc-btn{flex:1;padding:.55rem .8rem;min-height:44px}" +
+    "body:has(.mobile-cta) .cc-banner{bottom:calc(4.4rem + env(safe-area-inset-bottom,0px));border-radius:14px;left:.5rem;right:.5rem;" +
+    "padding-bottom:.7rem;box-shadow:0 -8px 30px -12px rgba(0,0,0,.35)}}" +
     "@keyframes ccUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}";
 
   function injectStyles() {

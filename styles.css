@@ -1474,3 +1474,47 @@ em { font-family: var(--serif); font-style: italic; }
 .tp-rel span { font-family: var(--serif); font-size: 1.2rem; color: var(--ink); }
 .tp-rel small { color: var(--accent); font-size: .85rem; }
 .nf-main h1 { font-size: clamp(2.2rem, 5vw, 3.2rem); margin: .3rem 0 1rem; }
+
+/* =====================================================
+   ACCESSIBILITY — contrast and tap targets (re-audit 25 Nov 2026)
+   ===================================================== */
+:root { --accent-text: var(--accent); --btn-bg: var(--accent); --btn-bg-hover: var(--accent-d); --btn-fg: #fff; }
+[data-theme="blush"] { --accent-text: #9a4e4e; --btn-bg: #a05454; --btn-bg-hover: #8a4545; }
+[data-theme="sage"]  { --accent-text: #3d5e45; --btn-bg: #4f6e57; --btn-bg-hover: #3d5e45; }
+[data-theme="midnight"] { --btn-fg: #140e20; --btn-bg-hover: #b39cf0; }
+[data-theme="gold"]     { --btn-fg: #120f08; --btn-bg-hover: #e8c050; }
+html { font-synthesis-weight: none; }
+
+/* Buttons */
+.btn-book, .mc-book, .step-num, .theme-toggle-btn { background: var(--btn-bg); border-color: var(--btn-bg); color: var(--btn-fg); }
+.btn-book:hover, .theme-toggle-btn:hover { background: var(--btn-bg-hover); border-color: var(--btn-bg-hover); }
+.svc-chip.checked, .date-card.checked, .time-card.checked { background: var(--btn-bg); border-color: var(--btn-bg); color: var(--btn-fg); }
+.date-card.checked .dnum { color: var(--btn-fg); }
+.date-card.checked .dow, .date-card.checked .mon { color: var(--btn-fg); opacity: .85; }
+
+/* Small accent-coloured text */
+.eyebrow, .price-block h3 small, .sc-more, .pb-link, .breadcrumb a, .reviews-more a, .tp-rel small,
+.map-placeholder .map-note a, .map-placeholder .map-open, .privacy-main a:not(.btn-book):not(.back-link),
+.field label, .svc-group > h3, .pb-from b, .wax-head .wax-col, .price-list li b, .gbl-cta { color: var(--accent-text); }
+.sc-price { color: var(--accent-text); }
+.footer-nav a, .back-link { color: var(--ink-soft); }
+
+/* Tap targets of at least 44px */
+.hamburger { min-width: 44px; min-height: 44px; align-items: center; justify-content: center; }
+.lang-switch { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; padding: 0 .8rem; }
+.sc-more, .pb-link, .reviews-more a, .map-placeholder .map-open, .breadcrumb a { display: inline-flex; align-items: center; min-height: 44px; }
+.map-placeholder .map-note a { display: inline-block; padding: .6rem 0; }
+.footer-nav a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 .3rem; }
+.footer-nav { gap: .6rem 1.2rem; }
+.back-link { min-height: 44px; }
+.contact-list a { display: inline-block; padding: .35rem 0; }
+.privacy-notice a, .book-step .hint a { display: inline-block; padding: .4rem 0; text-decoration: underline; color: var(--accent-text); }
+.contact-area { color: var(--ink-soft); margin: -1rem 0 1.6rem; }
+
+/* Phone bar with three buttons */
+@media (max-width: 700px) {
+  .mobile-cta a { padding: .75rem .4rem; font-size: .74rem; letter-spacing: .05em; min-height: 46px; }
+  .mc-call { background: var(--card); color: var(--ink); border: 1.5px solid var(--line); }
+  .mc-call svg { width: 16px; height: 16px; }
+  .mc-book { color: var(--btn-fg); }
+}

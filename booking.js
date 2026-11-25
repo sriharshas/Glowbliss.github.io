@@ -62,7 +62,7 @@ async function initBooking() {
       Object.values(categoryData.services).forEach((serviceData) => {
         const name = serviceData.name;              // English menu name (sent to the salon)
         const category = categoryData.name;         // English category (sent to the salon)
-        const shown = (LANG === "nl" && serviceData.name_nl) ? serviceData.name_nl : name;
+        const shown = LANG === "nl" ? (serviceData.name_nl || name) : (serviceData.name_en || name);
 
         const label = document.createElement("label");
         label.className = "svc-chip";
@@ -120,14 +120,17 @@ function renderDates() {
     const card = document.createElement("div");
     card.className = "date-card";
     card.setAttribute("role", "button");
+    card.setAttribute("aria-pressed", "false");
     card.tabIndex = 0;
     const label = i === 1 ? TXT.tomorrow : TXT.dows[d.getDay()];
     card.innerHTML = `<div class="dow">${label}</div><div class="dnum">${d.getDate()}</div><div class="mon">${TXT.mons[d.getMonth()]}</div>`;
+    card.setAttribute("aria-label", `${TXT.dows[d.getDay()]} ${d.getDate()} ${TXT.mons[d.getMonth()]}`);
     const english = `${DOWS_EN[d.getDay()]} ${d.getDate()} ${MONS_EN[d.getMonth()]} ${d.getFullYear()}`;
     const local = `${TXT.dows[d.getDay()]} ${d.getDate()} ${TXT.mons[d.getMonth()]} ${d.getFullYear()}`;
     const choose = () => {
-      document.querySelectorAll(".date-card").forEach(c => c.classList.remove("checked"));
+      document.querySelectorAll(".date-card").forEach(c => { c.classList.remove("checked"); c.setAttribute("aria-pressed", "false"); });
       card.classList.add("checked");
+      card.setAttribute("aria-pressed", "true");
       state.date = english;
       state.dateLabel = local;
       const isWeekend = d.getDay() === 0 || d.getDay() === 6;
@@ -152,11 +155,13 @@ function generateTimeSlots(isWeekend) {
       const card = document.createElement("div");
       card.className = "time-card";
       card.setAttribute("role", "button");
+      card.setAttribute("aria-pressed", "false");
       card.tabIndex = 0;
       card.textContent = t;
       const choose = () => {
-        document.querySelectorAll(".time-card").forEach(c => c.classList.remove("checked"));
+        document.querySelectorAll(".time-card").forEach(c => { c.classList.remove("checked"); c.setAttribute("aria-pressed", "false"); });
         card.classList.add("checked");
+        card.setAttribute("aria-pressed", "true");
         state.time = t;
         updateSummary();
       };
